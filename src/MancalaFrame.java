@@ -3,8 +3,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 /**
- * Description: Constructs the MancalaFrame to manage the position of PitButtons, undoButton,
- * styleButtons, and player score buttons.
+ * Description: View portions: Pit buttons, undo button, style frame button, and mancala button of the player
+ * on the game board frame.
  *
  * @author Legendary: Thanh Le (thanh.le01@sjsu.edu), Samuel Lam (samuel.lam@sjsu.edu), Dexter Estrada (dexter.estrada@sjsu.edu)
  */
@@ -21,6 +21,10 @@ public class MancalaFrame {
     private JButton undoButton;
     private JButton quitButton;
 
+    /**
+     * Constructs the MancalaFrame to manage the position of PitButtons, undoButton,
+     *  * styleFrameButtons, and player score buttons.
+     */
     public MancalaFrame() {
         //Get score player A
         playerAScore = new JButton("0");
@@ -51,13 +55,8 @@ public class MancalaFrame {
 
         //Set JPanel for undo button and quit button
         buttonPanel = new JPanel();
-        buttonPanel.add(undoButton, BorderLayout.SOUTH);
-        buttonPanel.add(quitButton, BorderLayout.NORTH);
-
-        //Set JPanel for style board and quit game
-        JPanel stylePanel = new JPanel();
-        stylePanel.add(changeStyleBoardButton);
-        stylePanel.add(quitButton);
+        buttonPanel.add(undoButton, BorderLayout.EAST);
+        buttonPanel.add(changeStyleBoardButton, BorderLayout.WEST);
 
         //Board game panel
         boardGamePanel = new JPanel();
@@ -128,8 +127,8 @@ public class MancalaFrame {
             return undoButton;
         } else if (select.equals("Choose Style Board")) {
             return changeStyleBoardButton;
-        } else if (select.equals("Quit")) {
-            return quitButton;
+      //  } else if (select.equals("Quit Mancala")) {
+            //return quitButton;
         } else {
             return null;
         }
