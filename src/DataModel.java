@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 /**
  * The numerical representation of a Mancala board
+ * Player A's side consists of pits A1-A6 and their Mancala
+ * Player B's side consists of pits B1-B6 and their Mancala
  * @author Legendary: Thanh Le (thanh.le01@sjsu.edu), Samuel Lam (samuel.lam@sjsu.edu), Dexter Estrada (dexter.estrada@sjsu.edu)
  */
 public class DataModel {
@@ -45,14 +47,28 @@ public class DataModel {
     }
 
     /**
-     * Removes the stones from the selected pit, and distributes them to sequential pits
+     * Removes the stones from player A's selected pit, and distributes them to sequential pits
+     * @param chosenPit An integer from 1 - 6
      */
-    public void doMove() {
+    public void playerAMove(int chosenPit) {
+        int temp = playerAPits.get(chosenPit - 1);
 
         for (ChangeListener listener : listeners) {
             listener.stateChanged(new ChangeEvent(this));
         }
     }
+
+    /**
+     * Removes the stones from player B's selected pit and distribute them to sequential pits
+     * @param chosenPit An integer from 1 - 6
+     */
+    public void playerBMove(int chosenPit) {
+
+        for (ChangeListener listener : listeners) {
+            listener.stateChanged(new ChangeEvent(this));
+        }
+    }
+
     /**
      * Gets the stones in Player A's pits
      * @return An int ArrayList of Player A's stones
