@@ -47,7 +47,8 @@ public class DataModel {
     }
 
     /**
-     * Removes the stones from player A's selected pit, and distributes them to sequential pits
+     * Removes the stones from player A's selected pit
+     * and distributes them to sequential pits except for player B's Mancala
      * @param chosenPit An integer from 1 - 6
      */
     public void playerAMove(int chosenPit) {
@@ -59,7 +60,8 @@ public class DataModel {
     }
 
     /**
-     * Removes the stones from player B's selected pit and distribute them to sequential pits
+     * Removes the stones from player B's selected pit
+     * and distribute them to sequential pits except for player A's Mancala
      * @param chosenPit An integer from 1 - 6
      */
     public void playerBMove(int chosenPit) {
