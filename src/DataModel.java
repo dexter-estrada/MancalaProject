@@ -52,7 +52,18 @@ public class DataModel {
      * @param chosenPit An integer from 1 - 6
      */
     public void playerAMove(int chosenPit) {
-        int temp = playerAPits.get(chosenPit - 1);
+        int stones = playerAPits.get(chosenPit - 1);
+
+        while (stones != 0) {
+            // TODO Case when A6 is selected
+            playerAPits.set(chosenPit, playerAPits.get(chosenPit) + 1);
+            stones--;
+            chosenPit++;
+            // If the end of the array is reached
+            if (chosenPit == playerAPits.size()) {
+                stones = moveHelper(stones, 0, 0);
+            }
+        }
 
         for (ChangeListener listener : listeners) {
             listener.stateChanged(new ChangeEvent(this));
@@ -65,10 +76,61 @@ public class DataModel {
      * @param chosenPit An integer from 1 - 6
      */
     public void playerBMove(int chosenPit) {
+        int stones = playerBPits.get(chosenPit - 1);
+
+        while (stones != 0) {
+            // TODO Case when B6 is selected
+            playerBPits.set(chosenPit, playerBPits.get(chosenPit) + 1);
+            stones--;
+            chosenPit++;
+            // If the end of the array is reached
+            if (chosenPit == playerBPits.size()) {
+                stones = moveHelper(stones, 1, 1);
+            }
+        }
 
         for (ChangeListener listener : listeners) {
             listener.stateChanged(new ChangeEvent(this));
         }
+    }
+
+    /**
+     * Recursively adds the stones to subsequent pits and Mancala
+     * TODO redo logic of moveHelper
+     * @param stones remaining stones to distribute
+     * @param playerNo Tracks whose turn it is
+     * @param sideNo Tracks which array is being updated
+     * @return The remaining number of stones
+     */
+    private int moveHelper(int stones, int playerNo, int sideNo) {
+        if (playerNo == 0 && sideNo == 0) {
+            playerAMancala++;
+            stones--;
+            sideNo = 1;
+        } else if (playerNo == 1 && sideNo == 1) {
+            playerBMancala++;
+            stones--;
+            sideNo = 0;
+        }
+        int i = 0;
+        while (stones != 0) {
+            if (sideNo == 0) {
+                playerAPits.set(i, playerAPits.get(i) + 1);
+                stones--;
+                i++;
+                if (i == playerAPits.size()) {
+                    stones = moveHelper(stones, playerNo, 1);
+                }
+            } else if (sideNo == 1) {
+                playerBPits.set(i, playerBPits.get(i) + 1);
+                stones--;
+                i++;
+                if (i == playerBPits.size()) {
+                    stones = moveHelper(stones, playerNo, 0);
+                }
+            }
+        }
+        return stones;
     }
 
     /**
