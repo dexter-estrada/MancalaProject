@@ -6,9 +6,9 @@ import java.util.ArrayList;
  * @author Legendary: Thanh Le (thanh.le01@sjsu.edu), Samuel Lam (samuel.lam@sjsu.edu), Dexter Estrada (dexter.estrada@sjsu.edu)
  */
 public class DataModel {
-    private ArrayList<Integer> playerA;             // Player A's pits
+    private ArrayList<Integer> playerAPits;         // Player A's pits
     private int playerAMancala;                     // Player A's Mancala
-    private ArrayList<Integer> playerB;             // Player B's pits
+    private ArrayList<Integer> playerBPits;         // Player B's pits
     private int playerBMancala;                     // Player B's Mancala
     private ArrayList<ChangeListener> listeners;    // Listeners attached to the DataModel
 
@@ -16,13 +16,13 @@ public class DataModel {
      * Default constructor. Doesn't add any stones to the pits
      */
     public DataModel() {
-        playerA = new ArrayList<>();
-        playerB = new ArrayList<>();
+        playerAPits = new ArrayList<>();
+        playerBPits = new ArrayList<>();
         playerAMancala = 0;
         playerBMancala = 0;
         for (int i = 0; i < 6; i++) {
-            playerA.add(0);
-            playerB.add(0);
+            playerAPits.add(0);
+            playerBPits.add(0);
         }
         listeners = new ArrayList<>();
     }
@@ -32,13 +32,13 @@ public class DataModel {
      * @param numberOfStones The number of pits per stone
      */
     public DataModel(int numberOfStones) {
-        playerA = new ArrayList<>();
-        playerB = new ArrayList<>();
+        playerAPits = new ArrayList<>();
+        playerBPits = new ArrayList<>();
         playerAMancala = 0;
         playerBMancala = 0;
         for (int i = 0; i < 6; i++) {
-            playerA.add(numberOfStones);
-            playerB.add(numberOfStones);
+            playerAPits.add(numberOfStones);
+            playerBPits.add(numberOfStones);
         }
         listeners = new ArrayList<>();
     }
@@ -47,8 +47,8 @@ public class DataModel {
      * Gets the stones in Player A's pits
      * @return An int ArrayList of Player A's stones
      */
-    public ArrayList<Integer> getPlayerA() {
-        return playerA;
+    public ArrayList<Integer> getPlayerAPits() {
+        return playerAPits;
     }
 
     /**
@@ -63,8 +63,8 @@ public class DataModel {
      * Get the stones in Player B's pits
      * @return An int ArrayList of Player B's stones
      */
-    public ArrayList<Integer> getPlayerB() {
-        return playerB;
+    public ArrayList<Integer> getPlayerBPits() {
+        return playerBPits;
     }
 
     /**
