@@ -3,7 +3,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 /**
- * Description
+ * Description: Constructs the MancalaFrame to manage the position of PitButtons, undoButton,
+ * styleButtons, and player score buttons.
  *
  * @author Legendary: Thanh Le (thanh.le01@sjsu.edu), Samuel Lam (samuel.lam@sjsu.edu), Dexter Estrada (dexter.estrada@sjsu.edu)
  */
@@ -75,10 +76,62 @@ public class MancalaFrame {
         boardGamePanel.setSize(700, 300);
         mancalaFrame.setVisible(true);
 
+    }
 
+    /**
+     * Gets pit Buttons array from the PitButtons class
+     * @return
+     */
+    public PitButtons[] getPitButtons() {
+        return pitButtons;
+    }
 
+    /**
+     * Gets a player A score
+     * @return
+     */
+    public JButton getPlayerAScore() {
+        return playerAScore;
+    }
+
+    /**
+     * Gets a player B score
+     * @return
+     */
+    public JButton getPlayerBScore() {
+        return playerBScore;
+    }
+
+    /**
+     * Gets a select choice JPanel from the given string select
+     * @param select
+     * @return
+     */
+    public JPanel getPanel(String select) {
+        if (select.equals("Pit")) {
+            return pitPanel;
+        } else if (select.equals("Buttons")) {
+            return buttonPanel;
+        } else {
+            return null;
+        }
     }
 
 
-
+    /**
+     * Gets a select choice JButton from the given string select
+     * @param select
+     * @return
+     */
+    public JButton getSelectButton(String select) {
+        if (select.equals("Undo")) {
+            return undoButton;
+        } else if (select.equals("Choose Style Board")) {
+            return changeStyleBoardButton;
+        } else if (select.equals("Quit")) {
+            return quitButton;
+        } else {
+            return null;
+        }
+    }
 }
