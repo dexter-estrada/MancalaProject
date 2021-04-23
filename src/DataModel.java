@@ -13,7 +13,7 @@ public class DataModel {
     private ArrayList<ChangeListener> listeners;    // Listeners attached to the DataModel
 
     /**
-     * Default constructor. Fills the default number of 3 stones per pit
+     * Default constructor. Doesn't add any stones to the pits
      */
     public DataModel() {
         playerA = new ArrayList<>();
@@ -21,8 +21,8 @@ public class DataModel {
         playerAMancala = 0;
         playerBMancala = 0;
         for (int i = 0; i < 6; i++) {
-            playerA.add(3);
-            playerB.add(3);
+            playerA.add(0);
+            playerB.add(0);
         }
         listeners = new ArrayList<>();
     }
@@ -41,5 +41,45 @@ public class DataModel {
             playerB.add(numberOfStones);
         }
         listeners = new ArrayList<>();
+    }
+
+    /**
+     * Gets the stones in Player A's pits
+     * @return An int ArrayList of Player A's stones
+     */
+    public ArrayList<Integer> getPlayerA() {
+        return playerA;
+    }
+
+    /**
+     * Gets the score of Player A
+     * @return An int of Player A's current score
+     */
+    public int getPlayerAMancala() {
+        return playerAMancala;
+    }
+
+    /**
+     * Get the stones in Player B's pits
+     * @return An int ArrayList of Player B's stones
+     */
+    public ArrayList<Integer> getPlayerB() {
+        return playerB;
+    }
+
+    /**
+     * Get the score of Player B
+     * @return An int of Player B's current score
+     */
+    public int getPlayerBMancala() {
+        return playerBMancala;
+    }
+
+    /**
+     * Adds a viewer
+     * @param listener A class that implements ChangeListener
+     */
+    public void addChangeListener(ChangeListener listener) {
+        listeners.add(listener);
     }
 }
