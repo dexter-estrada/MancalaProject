@@ -1,3 +1,4 @@
+import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.util.ArrayList;
 
@@ -43,6 +44,15 @@ public class DataModel {
         listeners = new ArrayList<>();
     }
 
+    /**
+     * Removes the stones from the selected pit, and distributes them to sequential pits
+     */
+    public void doMove() {
+
+        for (ChangeListener listener : listeners) {
+            listener.stateChanged(new ChangeEvent(this));
+        }
+    }
     /**
      * Gets the stones in Player A's pits
      * @return An int ArrayList of Player A's stones
