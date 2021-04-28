@@ -1,5 +1,5 @@
 /**
- * Description
+ * Description: class Pit sets up amount of stone in the pit
  *
  * @author Legendary: Thanh Le (thanh.le01@sjsu.edu), Samuel Lam (samuel.lam@sjsu.edu), Dexter Estrada (dexter.estrada@sjsu.edu)
  */
@@ -21,6 +21,17 @@ public class Pit {
     public int getStoneAmount() {
         return stoneAmount;
     }
+
+    /**
+     * Take all stones of the opposite pit
+     * @return
+     */
+    public int takeAllStones() {
+        int oppositeStones = stoneAmount;
+        stoneAmount = 0;
+        return oppositeStones;
+    }
+
 
     /**
      * Sets number of stone amount in the Pit
