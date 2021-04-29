@@ -15,6 +15,14 @@ public class DataModel {
     private int playerBMancala;                     // Player B's Mancala
     private ArrayList<ChangeListener> listeners;    // Listeners attached to the DataModel
 
+    // Testing doing a turn. MUST DELETE BEFORE RELEASING
+    public static void main(String[] args) {
+        DataModel game = new DataModel(8);
+        game.printText();
+        game.playerAMove(1);
+        game.printText();
+    }
+
     /**
      * Default constructor. Doesn't add any stones to the pits
      */
@@ -47,24 +55,41 @@ public class DataModel {
     }
 
     /**
+     * Prints console version of output. MUST DELETE BEFORE RELEASING
+     */
+    public void printText() {
+        System.out.println("Player A:");
+        for (int pit : playerAPits) {
+            System.out.print(pit + " ");
+        }
+        System.out.println();
+        System.out.println(playerAMancala);
+        System.out.println("Player B:");
+        for (int pit : playerBPits) {
+            System.out.print(pit + " ");
+        }
+        System.out.println();
+        System.out.println(playerBMancala);
+        System.out.println();
+    }
+
+    /**
      * Removes the stones from player A's selected pit
      * and distributes them to sequential pits except for player B's Mancala
      * @param chosenPit An integer from 1 - 6
      */
     public void playerAMove(int chosenPit) {
-        int stones = playerAPits.get(chosenPit - 1);
+        // Convert to index starting at 0
+        chosenPit--;
 
-        while (stones != 0) {
-            // TODO Case when A6 is selected
-            playerAPits.set(chosenPit, playerAPits.get(chosenPit) + 1);
-            stones--;
-            chosenPit++;
-            // If the end of the array is reached
-            if (chosenPit == playerAPits.size()) {
-                stones = moveHelper(stones, 0, 0);
-            }
+        int stones = playerAPits.get(chosenPit);
+
+        if (stones != 0) {
+            playerAPits.set(chosenPit, 0);
+            moveHelper(stones, chosenPit + 1, 0, 0);
         }
 
+        // Updating to viewers
         for (ChangeListener listener : listeners) {
             listener.stateChanged(new ChangeEvent(this));
         }
@@ -76,19 +101,17 @@ public class DataModel {
      * @param chosenPit An integer from 1 - 6
      */
     public void playerBMove(int chosenPit) {
+        // Convert to index starting at 0
+        chosenPit--;
+
         int stones = playerBPits.get(chosenPit - 1);
 
-        while (stones != 0) {
-            // TODO Case when B6 is selected
-            playerBPits.set(chosenPit, playerBPits.get(chosenPit) + 1);
-            stones--;
-            chosenPit++;
-            // If the end of the array is reached
-            if (chosenPit == playerBPits.size()) {
-                stones = moveHelper(stones, 1, 1);
-            }
+        if (stones != 0) {
+            playerBPits.set(chosenPit, 0);
+            moveHelper(stones, chosenPit + 1, 1, 1);
         }
 
+        // Updating to viewers
         for (ChangeListener listener : listeners) {
             listener.stateChanged(new ChangeEvent(this));
         }
@@ -96,39 +119,52 @@ public class DataModel {
 
     /**
      * Recursively adds the stones to subsequent pits and Mancala
-     * TODO redo logic of moveHelper
      * @param stones remaining stones to distribute
+     * @param pit Tracks which pit the recursion starts
      * @param playerNo Tracks whose turn it is
      * @param sideNo Tracks which array is being updated
      * @return The remaining number of stones
      */
-    private int moveHelper(int stones, int playerNo, int sideNo) {
+    private int moveHelper(int stones, int pit, int playerNo, int sideNo) {
+        int i = pit;
+        while (stones != 0) {
+            if (sideNo == 0) {
+                if (i == playerAPits.size() - 1) {
+                    stones = addToScore(stones, playerNo, sideNo);
+                    stones = moveHelper(stones, 0, playerNo, 1);
+                } else {
+                    playerAPits.set(i, playerAPits.get(i) + 1);
+                    stones--;
+                    i++;
+                }
+            } else if (sideNo == 1) {
+                if (i == playerBPits.size() - 1) {
+                    stones = addToScore(stones, playerNo, sideNo);
+                    stones = moveHelper(stones, 0, playerNo, 0);
+                } else {
+                    playerBPits.set(i, playerBPits.get(i) + 1);
+                    stones--;
+                    i++;
+                }
+            }
+        }
+        return stones;
+    }
+
+    /**
+     * Adds a point to a mancala
+     * @param stones Remaining stones to distribute
+     * @param playerNo Tracks whose turn it is
+     * @param sideNo Tracks which array is being updated
+     * @return The remaining number of stones
+     */
+    private int addToScore(int stones, int playerNo, int sideNo) {
         if (playerNo == 0 && sideNo == 0) {
             playerAMancala++;
             stones--;
-            sideNo = 1;
         } else if (playerNo == 1 && sideNo == 1) {
             playerBMancala++;
             stones--;
-            sideNo = 0;
-        }
-        int i = 0;
-        while (stones != 0) {
-            if (sideNo == 0) {
-                playerAPits.set(i, playerAPits.get(i) + 1);
-                stones--;
-                i++;
-                if (i == playerAPits.size()) {
-                    stones = moveHelper(stones, playerNo, 1);
-                }
-            } else if (sideNo == 1) {
-                playerBPits.set(i, playerBPits.get(i) + 1);
-                stones--;
-                i++;
-                if (i == playerBPits.size()) {
-                    stones = moveHelper(stones, playerNo, 0);
-                }
-            }
         }
         return stones;
     }
