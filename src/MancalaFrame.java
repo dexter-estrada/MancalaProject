@@ -39,7 +39,7 @@ public class MancalaFrame {
         this.dataModel = dataModel;
         //Get score mancala A
         mancalaA = new JButton("Mancala-A");
-        mancalaA.setFont(new Font("Arial", Font.PLAIN, 10));
+        mancalaA.setFont(new Font("Arial", Font.HANGING_BASELINE, 20));
         mancalaA.setEnabled(false);
         mancalaA.setFocusable(false);
         mancalaA.setBackground(Color.BLUE);
@@ -48,7 +48,7 @@ public class MancalaFrame {
 
         //Get score mancala B
         mancalaB = new JButton("Mancala-B");
-        mancalaB.setFont(new Font("Arial", Font.PLAIN, 10));
+        mancalaB.setFont(new Font("Arial", Font.HANGING_BASELINE, 20));
         mancalaB.setEnabled(false);
         mancalaB.setFocusable(false);
         mancalaB.setBackground(Color.orange);

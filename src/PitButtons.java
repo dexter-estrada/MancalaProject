@@ -11,15 +11,16 @@ public class PitButtons extends JButton {
 
     /**
      * Construct the PitButtons class with the indexPit given
-     * @param i - index of Pit
+     * @param name - index of Pit
      */
     public PitButtons(String name) {
         namePit = name;
     }
 
     /**
-     * Construct the PitButtons class with the indexPit given
-     * @param i - index of Pit
+     * Construct the PitButtons class with the namePit and the index Pit given
+     * @param namePit - name of Pit
+     * @param index - index of Pit
      */
     public PitButtons(String namePit, int index) {
         //super(namePitButton);
