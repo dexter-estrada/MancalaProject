@@ -84,6 +84,23 @@ public class DataModel {
     }
 
     /**
+     * Sets the number of stones for all the pits and resets the score
+     * @param stones The number of stones to set per pit
+     */
+    public void setStones(int stones) {
+        for (int i = 0; i < 6; i++) {
+            playerAPits.set(i, stones);
+            playerBPits.set(i, stones);
+        }
+        playerAMancala = playerBMancala = 0;
+
+        // Updating to viewers
+        for (ChangeListener listener : listeners) {
+            listener.stateChanged(new ChangeEvent(this));
+        }
+    }
+
+    /**
      * Removes the stones from player A's selected pit
      * and distributes them to sequential pits except for player B's Mancala
      * @param chosenPit An integer from 1 - 6
