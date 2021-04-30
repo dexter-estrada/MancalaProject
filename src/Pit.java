@@ -5,6 +5,8 @@
  */
 public class Pit {
     private int stoneAmount;
+    private char sidePit;
+    private int indexPit;
 
     /**
      * Construct the Pit class with the initial stone amount given
@@ -15,16 +17,35 @@ public class Pit {
     }
 
     /**
-     * Get number of  stone amount in the Pit
-     * @return  - stones
+     * Construct the Pit class with the Pit's size and the index of Pit
+     * @param sidePit - side A or B of Pit
+     * @param indexPit - index of Pit
+     */
+    public Pit(char sidePit, int indexPit) {
+        this.sidePit = sidePit;
+        this.indexPit = indexPit;
+    }
+
+    /**
+     * Get numbers of stone amount in the Pit
+     * @return  - amount stone in the Pit
      */
     public int getStoneAmount() {
         return stoneAmount;
     }
 
+
+    /**
+     * Sets numbers of stone amount in the Pit
+     * @param stone - number of stones
+     */
+    public void setStoneAmount(int stone) {
+        stoneAmount = stone;
+    }
+
     /**
      * Take all stones of the opposite pit
-     * @return
+     * @return - stone amount for opposite Mancala player
      */
     public int takeAllStones() {
         int oppositeStones = stoneAmount;
@@ -32,13 +53,51 @@ public class Pit {
         return oppositeStones;
     }
 
+    /**
+     *  Returns empty stone in the Pit after making a move
+     */
+    public void resetPit() {
+        stoneAmount = 0;
+    }
 
     /**
-     * Sets number of stone amount in the Pit
-     * @param stone - number of stones
+     *  Distribute amount of stones in the Pit to the next Pit
      */
-    public void setStoneAmount(int stone) {
-        stoneAmount = stone;
+    private void iterateStonePit() {
+        stoneAmount++;
     }
+
+    /**
+     * Get size of Pit
+     * @return - side of Pit
+     */
+    public char getSidePit() {
+        return sidePit;
+    }
+
+    /**
+     * Set side of Pit
+     * @param side - side of Pit
+     */
+    public void setSidePit(char side) {
+        sidePit = side;
+    }
+
+    /**
+     * Get position of Pit
+     * @return index of Pit
+     */
+    public int getIndexPit() {
+        return indexPit;
+    }
+
+    /**
+     * Set position of Pit
+     * @param index of Pit
+     */
+    public void setIndexPit(int index) {
+        indexPit = index;
+    }
+
 
 }

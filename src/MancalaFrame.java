@@ -1,6 +1,9 @@
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Description: View portions: Pit buttons, undo button, style frame button, and mancala button of the player
@@ -20,30 +23,37 @@ public class MancalaFrame {
     private JButton mancalaA;
     private JButton mancalaB;
     private JButton undoButton;
-    private JButton quitButton;
     private JButton stoneButton;
+    private JTextField mancalaAScore;
+    private JTextField mancalaBScore;
+    private DataModel dataModel;
+    final int MANCALA_FRAME_WIDTH = 850;
+    final int MANCALA_FRAME_HEIGHT = 350;
 
 
     /**
      * Constructs the MancalaFrame to manage the position of PitButtons, undoButton,
      *  * styleFrameButtons, and player score buttons.
      */
-    public MancalaFrame() {
+    public MancalaFrame(DataModel dataModel) {
+        this.dataModel = dataModel;
         //Get score mancala A
-        mancalaA = new JButton("A");
+        mancalaA = new JButton("Mancala-A");
+        mancalaA.setFont(new Font("Arial", Font.PLAIN, 10));
         mancalaA.setEnabled(false);
         mancalaA.setFocusable(false);
         mancalaA.setBackground(Color.BLUE);
         mancalaA.setForeground(Color.black);
-        mancalaA.setBorder(new EmptyBorder(40, 40, 40, 40));
+        mancalaA.setBorder(new EmptyBorder(10, 40, 10, 40));
 
         //Get score mancala B
-        mancalaB = new JButton("B");
+        mancalaB = new JButton("Mancala-B");
+        mancalaB.setFont(new Font("Arial", Font.PLAIN, 10));
         mancalaB.setEnabled(false);
         mancalaB.setFocusable(false);
-        mancalaB.setBackground(Color.RED);
-        mancalaB.setForeground(Color.black);
-        mancalaB.setBorder(new EmptyBorder(40, 40, 40, 40));
+        mancalaB.setBackground(Color.orange);
+        mancalaB.setForeground(Color.WHITE);
+        mancalaB.setBorder(new EmptyBorder(10, 40, 10, 40));
 
         //Undo Button
         undoButton = new JButton("Undo");
@@ -52,7 +62,7 @@ public class MancalaFrame {
 
         //Style Board Button
         styleBoardButton = new JButton("Style Board Button");
-        styleBoardButton.setBackground(Color.orange);
+        styleBoardButton.setBackground(Color.RED);
         styleBoardButton.setBorder(new EmptyBorder(10, 10, 10, 10));
 
         //Stone Button
@@ -61,36 +71,69 @@ public class MancalaFrame {
         stoneButton.setBorder(new EmptyBorder(10, 10, 10, 10));
 
 
-        //Set JPanel for style board game Button and stone Button
+        //Set select JPanel for style board game Button and stone Button
         selectPanel = new JPanel();
         selectPanel.add(styleBoardButton, BorderLayout.NORTH);
         selectPanel.add(stoneButton, BorderLayout.SOUTH);
 
 
-        //create size of PitButtons
-        pitButtons = new PitButtons[12];
+
 
         //Create pitPanel to hold pits and mancala A and mancalaB
         pitPanel = new JPanel();
         pitPanel.setLayout(new GridLayout(2, 6));
-        pitPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+        pitPanel.setBorder(new LineBorder(Color.BLACK));
+        pitPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
 
-        for (int i=0; i<pitButtons.length; i++) {
+        //Create size of PitButtons
+        pitButtons = new PitButtons[12];
+        for (int i= pitButtons.length-1; i>=0; i--) {
             if (i<6) {
-                pitButtons[i] = new PitButtons('A', i);
+                pitButtons[i] = new PitButtons("A", i);
+               // JLabel labelA = new JLabel("A");
+               // JLabel sideALabel = new JLabel(pitButtons[i].toString());
                 pitButtons[i].setBackground(Color.LIGHT_GRAY);
+                pitButtons[i].setText("A");
                 pitPanel.add(pitButtons[i]);
+                dataModel.attach(pitButtons[i]);
+
+               // pitPanel.add(sideALabel);
+
+
             } else {
-                pitButtons[i] = new PitButtons('B', i);
+                pitButtons[i] = new PitButtons("B", i);
+               // JLabel sideBLabel = new JLabel(pitButtons[i].toString());
                 pitButtons[i].setBackground(Color.LIGHT_GRAY);
+                pitButtons[i].setText("B");
                 pitPanel.add(pitButtons[i]);
+                dataModel.attach(pitButtons[i]);
+                //pitPanel.add(sideBLabel);
             }
         }
+
+        //Get mancala A score
+       // JLabel mancalaALbl = new JLabel("Mancala-A Score");
+        mancalaAScore = new JTextField("0");
+        mancalaAScore.setText("A-Score");
+        mancalaAScore.setBackground(Color.WHITE);
+        mancalaAScore.setForeground(Color.black);
+        mancalaAScore.setBorder(new EmptyBorder(10, 10, 10, 10));
+
+        //Get mancala B score
+      //  JLabel mancalaBLbl = new JLabel("Mancala-B Score");
+        mancalaBScore = new JTextField("0");
+        mancalaBScore.setText("B-Score");
+        mancalaBScore.setBackground(Color.white);
+        mancalaBScore.setForeground(Color.black);
+        mancalaBScore.setBorder(new EmptyBorder(10, 10, 10, 10));
 
         //Set JPanel for undo button and quit button
         buttonPanel = new JPanel();
         buttonPanel.add(undoButton, BorderLayout.NORTH);
-
+        buttonPanel.add(mancalaAScore, BorderLayout.EAST);
+      //  buttonPanel.add(mancalaALbl);
+        buttonPanel.add(mancalaBScore, BorderLayout.WEST);
+        //buttonPanel.add(mancalaBLbl);
 
         //Board game panel
         boardGamePanel = new JPanel();
@@ -107,14 +150,14 @@ public class MancalaFrame {
         mancalaFrame.setTitle("Mancala Game");
         mancalaFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mancalaFrame.pack();
-        mancalaFrame.setSize(800, 300);
+        mancalaFrame.setSize(MANCALA_FRAME_WIDTH, MANCALA_FRAME_HEIGHT);
         mancalaFrame.setVisible(true);
 
     }
 
     /**
      * Gets pit Buttons array from the PitButtons class
-     * @return
+     * @return - pit buttons of each Mancala's side
      */
     public PitButtons[] getPitButtons() {
         return pitButtons;
@@ -122,7 +165,7 @@ public class MancalaFrame {
 
     /**
      * Gets a player A score
-     * @return
+     * @return - total stones of Mancala A
      */
     public JButton getMancalaA() {
         return mancalaA;
@@ -130,16 +173,45 @@ public class MancalaFrame {
 
     /**
      * Gets a player B score
-     * @return
+     * @return - total stones of Mancala B
      */
     public JButton getMancalaB() {
         return mancalaB;
     }
 
     /**
+     * Gets Stone Selection Button
+     * @return - number stone selection
+     */
+    public JButton getStoneButton() {
+        stoneButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            }
+        });
+        return stoneButton;
+    }
+
+    /**
+     * Gets style board button
+     * @return - style board selection
+     */
+    public JButton getStyleBoardButton() {
+        return styleBoardButton;
+    }
+
+    /**
+     * Gets undo button
+     * @return - undo choice
+     */
+    public JButton getUndoButton() {
+        return undoButton;
+    }
+
+    /**
      * Gets a select choice JPanel from the given string select
-     * @param select
-     * @return
+     * @param select - play select panel
+     * @return - panel for selection
      */
     public JPanel getPanel(String select) {
         if (select.equals("Pit")) {
@@ -156,8 +228,8 @@ public class MancalaFrame {
 
     /**
      * Gets a select choice JButton from the given string select
-     * @param select
-     * @return
+     * @param select - player select button
+     * @return button selection
      */
     public JButton getSelectButton(String select) {
         if (select.equals("Undo")) {
@@ -169,5 +241,9 @@ public class MancalaFrame {
         } else {
             return null;
         }
+    }
+
+    public void add(int numStones) {
+        Pit pit = new Pit(numStones);
     }
 }

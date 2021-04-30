@@ -1,24 +1,34 @@
 import javax.swing.*;
 /**
- * Description: Class PitButtons holds name and keep track of index of pit button
+ * Description: Class PitButtons holds name and keeps track of index of pit button
  *
  * @author Legendary: Thanh Le (thanh.le01@sjsu.edu), Samuel Lam (samuel.lam@sjsu.edu), Dexter Estrada (dexter.estrada@sjsu.edu)
  */
 public class PitButtons extends JButton {
     private int indexPitButton;
-    private char namePitButton;
+    private String namePitButton;
+    private String namePit;
 
     /**
      * Construct the PitButtons class with the indexPit given
-     * @param i - indexPit
+     * @param i - index of Pit
      */
-    public PitButtons(char name, int index) {
-        namePitButton = name;
+    public PitButtons(String name) {
+        namePit = name;
+    }
+
+    /**
+     * Construct the PitButtons class with the indexPit given
+     * @param i - index of Pit
+     */
+    public PitButtons(String namePit, int index) {
+        //super(namePitButton);
+        namePitButton = namePit;
         indexPitButton = index;
     }
 
     /**
-     * Get the index button of Pit
+     * Get the index Pit's button
      * @return - index pit
      */
     public int getIndexPit() {
@@ -26,16 +36,16 @@ public class PitButtons extends JButton {
     }
 
     /**
-     * Get name pit Button
-     * @return
+     * Get name pit's Button
+     * @return - name of Pit's Button
      */
-    public char getNamePitButton() {
+    public String getNamePitButton() {
         return namePitButton;
     }
 
     /**
-     * Get preference name of pit Button
-     * @return
+     * Get preference name and index of pit Button
+     * @return - name Pit's button and index of Pit's Button
      */
     public String toString() {
         return namePitButton + "-" + indexPitButton;
