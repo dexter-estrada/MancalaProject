@@ -15,11 +15,13 @@ public class DataModel {
     private int playerBMancala;                     // Player B's Mancala
     private ArrayList<ChangeListener> listeners;    // Listeners attached to the DataModel
 
-    // Testing doing a turn. MUST DELETE BEFORE RELEASING
+    // Testing doing turns. MUST DELETE BEFORE RELEASING
     public static void main(String[] args) {
         DataModel game = new DataModel(8);
         game.printText();
-        game.playerAMove(1);
+        game.playerAMove(6);
+        game.printText();
+        game.playerBMove(6);
         game.printText();
     }
 
@@ -129,7 +131,7 @@ public class DataModel {
         int i = pit;
         while (stones != 0) {
             if (sideNo == 0) {
-                if (i == playerAPits.size() - 1) {
+                if (i == playerAPits.size()) {
                     stones = addToScore(stones, playerNo, sideNo);
                     stones = moveHelper(stones, 0, playerNo, 1);
                 } else {
@@ -138,7 +140,7 @@ public class DataModel {
                     i++;
                 }
             } else if (sideNo == 1) {
-                if (i == playerBPits.size() - 1) {
+                if (i == playerBPits.size()) {
                     stones = addToScore(stones, playerNo, sideNo);
                     stones = moveHelper(stones, 0, playerNo, 0);
                 } else {
