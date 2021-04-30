@@ -256,6 +256,7 @@ public class MancalaFrame implements ChangeListener {
      */
     @Override
     public void stateChanged(ChangeEvent e) {
-
+        mancalaA.setText("Mancala-A: " + dataModel.getPlayerAMancala());
+        mancalaB.setText("Mancala-B: " + dataModel.getPlayerBMancala());
     }
 }
