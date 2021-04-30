@@ -8,7 +8,6 @@ public class Main {
         DataModel dataModel = new DataModel();
         MancalaFrame mancalaFrame  = new MancalaFrame(dataModel);
         //UndoButton undoButton = new UndoButton();
-        //StyleButton styleButton = new StyleButton()
         //StoneSelection stoneSelection = new StoneSelection();
 
     }
