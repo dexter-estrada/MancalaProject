@@ -90,6 +90,33 @@ public class MancalaFrame implements ChangeListener {
 
         //Create size of PitButtons
         pitButtons = new PitButtons[12];
+
+        // Creating pitButtons for player B
+        for (int i = 11; i > 5; i--) {
+            int finalI = i - 6;
+            pitButtons[i] = new PitButtons("B", i);
+            // JLabel sideBLabel = new JLabel(pitButtons[i].toString());
+            pitButtons[i].setBackground(Color.LIGHT_GRAY);
+            pitButtons[i].setText(Integer.toString(dataModel.getPlayerBPits().get(finalI)));
+            pitButtons[i].addActionListener(e -> dataModel.playerBMove(finalI));
+            //pitPanel.add(sideBLabel);
+            pitPanel.add(pitButtons[i]);
+        }
+
+        // Creating pitButtons for player A
+        for (int i = 0; i < 6; i++) {
+            int finalI = i;
+            pitButtons[i] = new PitButtons("A", i);
+            // JLabel labelA = new JLabel("A");
+            // JLabel sideALabel = new JLabel(pitButtons[i].toString());
+            pitButtons[i].setBackground(Color.LIGHT_GRAY);
+            pitButtons[i].setText(Integer.toString(dataModel.getPlayerBPits().get(finalI)));
+            pitButtons[i].addActionListener(e -> dataModel.playerAMove(finalI));
+            // pitPanel.add(sideALabel);
+            pitPanel.add(pitButtons[i]);
+        }
+
+        /*
         for (int i= pitButtons.length-1; i>=0; i--) {
             int finalI = i % 6; // Position of player A or B's pits
             if (i<6) {
@@ -112,6 +139,7 @@ public class MancalaFrame implements ChangeListener {
             }
             pitPanel.add(pitButtons[i]);
         }
+        */
 
         //Get mancala A score
        // JLabel mancalaALbl = new JLabel("Mancala-A Score");

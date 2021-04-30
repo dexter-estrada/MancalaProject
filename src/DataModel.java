@@ -25,9 +25,9 @@ public class DataModel {
     public static void main(String[] args) {
         DataModel game = new DataModel(8);
         game.printText();
-        game.playerAMove(6);
+        game.playerAMove(5);
         game.printText();
-        game.playerBMove(6);
+        game.playerBMove(5);
         game.printText();
         game.undoMove();
         game.printText();
@@ -103,11 +103,11 @@ public class DataModel {
     /**
      * Removes the stones from player A's selected pit
      * and distributes them to sequential pits except for player B's Mancala
-     * @param chosenPit An integer from 1 - 6
+     * @param chosenPit An integer from 0 - 5
      */
     public void playerAMove(int chosenPit) {
         // Convert to index starting at 0
-        chosenPit--;
+        //chosenPit--;
 
         int stonesLeft = playerAPits.get(chosenPit);
 
@@ -129,13 +129,13 @@ public class DataModel {
     /**
      * Removes the stones from player B's selected pit
      * and distribute them to sequential pits except for player A's Mancala
-     * @param chosenPit An integer from 1 - 6
+     * @param chosenPit An integer from 0 - 5
      */
     public void playerBMove(int chosenPit) {
         // Convert to index starting at 0
-        chosenPit--;
+        //chosenPit--;
 
-        int stonesLeft = playerBPits.get(chosenPit - 1);
+        int stonesLeft = playerBPits.get(chosenPit);
 
         if (stonesLeft != 0) {
             playerBPits.set(chosenPit, 0);
