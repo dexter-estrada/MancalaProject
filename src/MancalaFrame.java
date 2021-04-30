@@ -289,5 +289,16 @@ public class MancalaFrame implements ChangeListener {
         mancalaB.setText("Mancala-B: " + dataModel.getPlayerBMancala());
         mancalaAScore.setText("A-Score: " + dataModel.getPlayerAMancala());
         mancalaBScore.setText("B-Score: " + dataModel.getPlayerBMancala());
+
+        // Updating pits
+        // Player A
+        for (int i = 0; i < 6; i++) {
+            pitButtons[i].setText(Integer.toString(dataModel.getPlayerAPits().get(i)));
+        }
+        // Player B
+        for (int i = 11; i > 5; i--) {
+            int finalI = i - 6;
+            pitButtons[i].setText(Integer.toString(dataModel.getPlayerBPits().get(finalI)));
+        }
     }
 }
