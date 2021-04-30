@@ -13,7 +13,7 @@ public class MancalaFrame {
     private JPanel pitPanel;
     private JPanel boardGamePanel;
     private StyleBoardGame styleBoardPanel;
-    private PitButtons[] pitButtons;
+    //private PitButtons[] pitButtons;
     private JButton changeStyleBoardButton;
     private JButton playerAScore;
     private JButton playerBScore;
@@ -45,7 +45,7 @@ public class MancalaFrame {
         quitButton.setBorder(new EmptyBorder(10, 10, 10, 10));
 
         //create size of PitButtons
-        pitButtons = new PitButtons[12];
+        //pitButtons = new PitButtons[12];
 
 
         //Set JPanel for undo button and quit button
