@@ -9,7 +9,6 @@ public class Main {
         MancalaFrame mancalaFrame  = new MancalaFrame(dataModel);
         dataModel.addChangeListener(mancalaFrame);
         //UndoButton undoButton = new UndoButton();
-        //StyleButton styleButton = new StyleButton()
         //StoneSelection stoneSelection = new StoneSelection();
 
     }
