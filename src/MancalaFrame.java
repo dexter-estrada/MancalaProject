@@ -256,7 +256,10 @@ public class MancalaFrame implements ChangeListener {
      */
     @Override
     public void stateChanged(ChangeEvent e) {
+        // Updating score
         mancalaA.setText("Mancala-A: " + dataModel.getPlayerAMancala());
         mancalaB.setText("Mancala-B: " + dataModel.getPlayerBMancala());
+        mancalaAScore.setText("A-Score: " + dataModel.getPlayerAMancala());
+        mancalaBScore.setText("B-Score: " + dataModel.getPlayerBMancala());
     }
 }
