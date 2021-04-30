@@ -171,6 +171,10 @@ public class DataModel {
         return stones;
     }
 
+    public void undoMove() {
+
+    }
+
     /**
      * Gets the stones in Player A's pits
      * @return An int ArrayList of Player A's stones
