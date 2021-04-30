@@ -1,6 +1,8 @@
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,7 +13,7 @@ import java.awt.event.ActionListener;
  *
  * @author Legendary: Thanh Le (thanh.le01@sjsu.edu), Samuel Lam (samuel.lam@sjsu.edu), Dexter Estrada (dexter.estrada@sjsu.edu)
  */
-public class MancalaFrame {
+public class MancalaFrame implements ChangeListener {
     private JFrame mancalaFrame;
     private JPanel buttonPanel;
     private JPanel pitPanel;
@@ -38,7 +40,7 @@ public class MancalaFrame {
     public MancalaFrame(DataModel dataModel) {
         this.dataModel = dataModel;
         //Get score mancala A
-        mancalaA = new JButton("Mancala-A");
+        mancalaA = new JButton("Mancala-A: " + dataModel.getPlayerAMancala());
         mancalaA.setFont(new Font("Arial", Font.PLAIN, 10));
         mancalaA.setEnabled(false);
         mancalaA.setFocusable(false);
@@ -47,7 +49,7 @@ public class MancalaFrame {
         mancalaA.setBorder(new EmptyBorder(10, 40, 10, 40));
 
         //Get score mancala B
-        mancalaB = new JButton("Mancala-B");
+        mancalaB = new JButton("Mancala-B: " + dataModel.getPlayerBMancala());
         mancalaB.setFont(new Font("Arial", Font.PLAIN, 10));
         mancalaB.setEnabled(false);
         mancalaB.setFocusable(false);
@@ -57,6 +59,7 @@ public class MancalaFrame {
 
         //Undo Button
         undoButton = new JButton("Undo");
+        undoButton.addActionListener(e -> dataModel.undoMove());
         undoButton.setBackground(Color.PINK);
         undoButton.setBorder(new EmptyBorder(10, 10, 10, 10));
 
@@ -95,8 +98,6 @@ public class MancalaFrame {
                 pitButtons[i].setBackground(Color.LIGHT_GRAY);
                 pitButtons[i].setText("A");
                 pitPanel.add(pitButtons[i]);
-                dataModel.attach(pitButtons[i]);
-
                // pitPanel.add(sideALabel);
 
 
@@ -106,7 +107,6 @@ public class MancalaFrame {
                 pitButtons[i].setBackground(Color.LIGHT_GRAY);
                 pitButtons[i].setText("B");
                 pitPanel.add(pitButtons[i]);
-                dataModel.attach(pitButtons[i]);
                 //pitPanel.add(sideBLabel);
             }
         }
@@ -114,7 +114,7 @@ public class MancalaFrame {
         //Get mancala A score
        // JLabel mancalaALbl = new JLabel("Mancala-A Score");
         mancalaAScore = new JTextField("0");
-        mancalaAScore.setText("A-Score");
+        mancalaAScore.setText("A-Score: " + dataModel.getPlayerAMancala());
         mancalaAScore.setBackground(Color.WHITE);
         mancalaAScore.setForeground(Color.black);
         mancalaAScore.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -122,7 +122,7 @@ public class MancalaFrame {
         //Get mancala B score
       //  JLabel mancalaBLbl = new JLabel("Mancala-B Score");
         mancalaBScore = new JTextField("0");
-        mancalaBScore.setText("B-Score");
+        mancalaBScore.setText("B-Score: " + dataModel.getPlayerBMancala());
         mancalaBScore.setBackground(Color.white);
         mancalaBScore.setForeground(Color.black);
         mancalaBScore.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -245,5 +245,15 @@ public class MancalaFrame {
 
     public void add(int numStones) {
         Pit pit = new Pit(numStones);
+    }
+
+    /**
+     * Invoked when the target of the listener has changed its state.
+     *
+     * @param e a ChangeEvent object
+     */
+    @Override
+    public void stateChanged(ChangeEvent e) {
+
     }
 }
