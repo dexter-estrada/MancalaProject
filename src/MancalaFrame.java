@@ -91,24 +91,26 @@ public class MancalaFrame implements ChangeListener {
         //Create size of PitButtons
         pitButtons = new PitButtons[12];
         for (int i= pitButtons.length-1; i>=0; i--) {
+            int finalI = i % 6; // Position of player A or B's pits
             if (i<6) {
                 pitButtons[i] = new PitButtons("A", i);
                // JLabel labelA = new JLabel("A");
                // JLabel sideALabel = new JLabel(pitButtons[i].toString());
                 pitButtons[i].setBackground(Color.LIGHT_GRAY);
-                pitButtons[i].setText("A");
-                pitPanel.add(pitButtons[i]);
-               // pitPanel.add(sideALabel);
+                pitButtons[i].setText(Integer.toString(dataModel.getPlayerBPits().get(finalI)));
+                pitButtons[i].addActionListener(e -> dataModel.playerAMove(finalI));
+                // pitPanel.add(sideALabel);
 
 
             } else {
                 pitButtons[i] = new PitButtons("B", i);
                // JLabel sideBLabel = new JLabel(pitButtons[i].toString());
                 pitButtons[i].setBackground(Color.LIGHT_GRAY);
-                pitButtons[i].setText("B");
-                pitPanel.add(pitButtons[i]);
+                pitButtons[i].setText(Integer.toString(dataModel.getPlayerBPits().get(finalI)));
+                pitButtons[i].addActionListener(e -> dataModel.playerBMove(finalI));
                 //pitPanel.add(sideBLabel);
             }
+            pitPanel.add(pitButtons[i]);
         }
 
         //Get mancala A score
