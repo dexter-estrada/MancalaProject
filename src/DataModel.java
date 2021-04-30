@@ -294,4 +294,7 @@ public class DataModel {
     public void addChangeListener(ChangeListener listener) {
         listeners.add(listener);
     }
+
+    public void attach(MancalaFrame frame) {}
+    public void attach(PitButtons pitButtons) {}
 }
