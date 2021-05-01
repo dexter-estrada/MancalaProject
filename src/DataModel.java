@@ -10,10 +10,11 @@ import java.util.ArrayList;
  */
 public class DataModel {
     private ArrayList<Pit> playerAPits;         // Player A's pits
-    private int playerAMancala;                     // Player A's Mancala
+    private PlayerMancala playerAMancala;                     // Player A's Mancala
     private ArrayList<Pit> playerBPits;         // Player B's pits
-    private int playerBMancala;                     // Player B's Mancala
+    private PlayerMancala playerBMancala;                     // Player B's Mancala
 
+    // Tracks the last move that was made
     private int lastPlayerNo;                           // Last player who made a move
     private int lastStones;                             // Number of stones used last turn
     private int lastSideNo;                             // Tracks which side was last selected
@@ -39,8 +40,8 @@ public class DataModel {
     public DataModel() {
         playerAPits = new ArrayList<>();
         playerBPits = new ArrayList<>();
-        playerAMancala = 0;
-        playerBMancala = 0;
+        playerAMancala = new PlayerMancala();
+        playerBMancala = new PlayerMancala();
         for (int i = 0; i < 6; i++) {
             playerAPits.add(new Pit(0, 'A', i));
             playerBPits.add(new Pit(0, 'B', i));
@@ -55,8 +56,8 @@ public class DataModel {
     public DataModel(int numberOfStones) {
         playerAPits = new ArrayList<>();
         playerBPits = new ArrayList<>();
-        playerAMancala = 0;
-        playerBMancala = 0;
+        playerAMancala = new PlayerMancala();
+        playerBMancala = new PlayerMancala();
         for (int i = 0; i < 6; i++) {
             playerAPits.add(new Pit(numberOfStones, 'A', i));
             playerBPits.add(new Pit(numberOfStones, 'A', i));
@@ -73,13 +74,13 @@ public class DataModel {
             System.out.print(pit.getStoneAmount() + " ");
         }
         System.out.println();
-        System.out.println(playerAMancala);
+        System.out.println(playerAMancala.getNumStones());
         System.out.println("Player B:");
         for (Pit pit : playerBPits) {
             System.out.print(pit.getStoneAmount() + " ");
         }
         System.out.println();
-        System.out.println(playerBMancala);
+        System.out.println(playerBMancala.getNumStones());
         System.out.println();
     }
 
@@ -92,7 +93,8 @@ public class DataModel {
             playerAPits.get(i).setStoneAmount(stones);
             playerBPits.get(i).setStoneAmount(stones);
         }
-        playerAMancala = playerBMancala = 0;
+        playerAMancala.setNumStones(0);
+        playerBMancala.setNumStones(0);
 
         update();
     }
@@ -182,10 +184,10 @@ public class DataModel {
      */
     private int addToScore(int stonesLeft) {
         if (lastPlayerNo == 0 && lastSideNo == 0) {
-            playerAMancala++;
+            playerAMancala.incNumStones();
             stonesLeft--;
         } else if (lastPlayerNo == 1 && lastSideNo == 1) {
-            playerBMancala++;
+            playerBMancala.incNumStones();
             stonesLeft--;
         }
         return stonesLeft;
@@ -248,10 +250,10 @@ public class DataModel {
      */
     private int subtractFromScore(int stonesLeft) {
         if (lastPlayerNo == 0 && lastSideNo == 0) {
-            playerAMancala--;
+            playerAMancala.decNumStones();
             stonesLeft--;
         } else if (lastPlayerNo == 1 && lastSideNo == 1) {
-            playerBMancala--;
+            playerBMancala.decNumStones();
             stonesLeft--;
         }
         return stonesLeft;
@@ -269,7 +271,7 @@ public class DataModel {
      * Gets the score of Player A
      * @return An int of Player A's current score
      */
-    public int getPlayerAMancala() {
+    public PlayerMancala getPlayerAMancala() {
         return playerAMancala;
     }
 
@@ -285,7 +287,7 @@ public class DataModel {
      * Get the score of Player B
      * @return An int of Player B's current score
      */
-    public int getPlayerBMancala() {
+    public PlayerMancala getPlayerBMancala() {
         return playerBMancala;
     }
 

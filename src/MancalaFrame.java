@@ -40,7 +40,7 @@ public class MancalaFrame implements ChangeListener {
     public MancalaFrame(DataModel dataModel) {
         this.dataModel = dataModel;
         //Get score mancala A
-        mancalaA = new JButton("Mancala-A: " + dataModel.getPlayerAMancala());
+        mancalaA = new JButton("Mancala-A: " + dataModel.getPlayerAMancala().getNumStones());
         mancalaA.setFont(new Font("Arial", Font.PLAIN, 10));
         mancalaA.setEnabled(false);
         mancalaA.setFocusable(false);
@@ -49,7 +49,7 @@ public class MancalaFrame implements ChangeListener {
         mancalaA.setBorder(new EmptyBorder(10, 40, 10, 40));
 
         //Get score mancala B
-        mancalaB = new JButton("Mancala-B: " + dataModel.getPlayerBMancala());
+        mancalaB = new JButton("Mancala-B: " + dataModel.getPlayerBMancala().getNumStones());
         mancalaB.setFont(new Font("Arial", Font.PLAIN, 10));
         mancalaB.setEnabled(false);
         mancalaB.setFocusable(false);
@@ -144,7 +144,7 @@ public class MancalaFrame implements ChangeListener {
         //Get mancala A score
        // JLabel mancalaALbl = new JLabel("Mancala-A Score");
         mancalaAScore = new JTextField("0");
-        mancalaAScore.setText("A-Score: " + dataModel.getPlayerAMancala());
+        mancalaAScore.setText("A-Score: " + dataModel.getPlayerAMancala().getNumStones());
         mancalaAScore.setBackground(Color.WHITE);
         mancalaAScore.setForeground(Color.black);
         mancalaAScore.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -152,7 +152,7 @@ public class MancalaFrame implements ChangeListener {
         //Get mancala B score
       //  JLabel mancalaBLbl = new JLabel("Mancala-B Score");
         mancalaBScore = new JTextField("0");
-        mancalaBScore.setText("B-Score: " + dataModel.getPlayerBMancala());
+        mancalaBScore.setText("B-Score: " + dataModel.getPlayerBMancala().getNumStones());
         mancalaBScore.setBackground(Color.white);
         mancalaBScore.setForeground(Color.black);
         mancalaBScore.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -285,10 +285,10 @@ public class MancalaFrame implements ChangeListener {
     @Override
     public void stateChanged(ChangeEvent e) {
         // Updating score
-        mancalaA.setText("Mancala-A: " + dataModel.getPlayerAMancala());
-        mancalaB.setText("Mancala-B: " + dataModel.getPlayerBMancala());
-        mancalaAScore.setText("A-Score: " + dataModel.getPlayerAMancala());
-        mancalaBScore.setText("B-Score: " + dataModel.getPlayerBMancala());
+        mancalaA.setText("Mancala-A: " + dataModel.getPlayerAMancala().getNumStones());
+        mancalaB.setText("Mancala-B: " + dataModel.getPlayerBMancala().getNumStones());
+        mancalaAScore.setText("A-Score: " + dataModel.getPlayerAMancala().getNumStones());
+        mancalaBScore.setText("B-Score: " + dataModel.getPlayerBMancala().getNumStones());
 
         // Updating pits
         // Player A
