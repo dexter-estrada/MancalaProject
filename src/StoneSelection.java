@@ -7,7 +7,9 @@ import java.awt.event.ActionListener;
  *
  * @author Legendary: Thanh Le (thanh.le01@sjsu.edu), Samuel Lam (samuel.lam@sjsu.edu), Dexter Estrada (dexter.estrada@sjsu.edu)
  */
-public class StoneSelection extends JPanel {
+public class StoneSelection extends DataModel {
+
+
     private JButton threeStonesButton;
     private JButton fourStonesButton;
     private JButton selectStoneButton;
@@ -37,24 +39,21 @@ public class StoneSelection extends JPanel {
                 selectStoneButton(threeStonesButton);
                 numStones = 3;
             }
-
             private void selectStoneButton(JButton threeStonesButton) {
                 pitStones.add(numStones);
             }
         });
-        
+
         fourStonesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 selectStoneButton(fourStonesButton);
                 numStones = 4;
             }
-
             private void selectStoneButton(JButton fourStonesButton) {
                 pitStones.add(numStones);
             }
         });
-
          */
 
     }

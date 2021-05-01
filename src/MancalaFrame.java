@@ -1,8 +1,6 @@
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,7 +11,7 @@ import java.awt.event.ActionListener;
  *
  * @author Legendary: Thanh Le (thanh.le01@sjsu.edu), Samuel Lam (samuel.lam@sjsu.edu), Dexter Estrada (dexter.estrada@sjsu.edu)
  */
-public class MancalaFrame implements ChangeListener {
+public class MancalaFrame {
     private JFrame mancalaFrame;
     private JPanel buttonPanel;
     private JPanel pitPanel;
@@ -40,8 +38,8 @@ public class MancalaFrame implements ChangeListener {
     public MancalaFrame(DataModel dataModel) {
         this.dataModel = dataModel;
         //Get score mancala A
-        mancalaA = new JButton("Mancala-A: " + dataModel.getPlayerAMancala());
-        mancalaA.setFont(new Font("Arial", Font.PLAIN, 10));
+        mancalaA = new JButton("Mancala-A");
+        mancalaA.setFont(new Font("Arial", Font.HANGING_BASELINE, 20));
         mancalaA.setEnabled(false);
         mancalaA.setFocusable(false);
         mancalaA.setBackground(Color.BLUE);
@@ -49,8 +47,8 @@ public class MancalaFrame implements ChangeListener {
         mancalaA.setBorder(new EmptyBorder(10, 40, 10, 40));
 
         //Get score mancala B
-        mancalaB = new JButton("Mancala-B: " + dataModel.getPlayerBMancala());
-        mancalaB.setFont(new Font("Arial", Font.PLAIN, 10));
+        mancalaB = new JButton("Mancala-B");
+        mancalaB.setFont(new Font("Arial", Font.HANGING_BASELINE, 20));
         mancalaB.setEnabled(false);
         mancalaB.setFocusable(false);
         mancalaB.setBackground(Color.orange);
@@ -59,7 +57,6 @@ public class MancalaFrame implements ChangeListener {
 
         //Undo Button
         undoButton = new JButton("Undo");
-        undoButton.addActionListener(e -> dataModel.undoMove());
         undoButton.setBackground(Color.PINK);
         undoButton.setBorder(new EmptyBorder(10, 10, 10, 10));
 
@@ -90,61 +87,34 @@ public class MancalaFrame implements ChangeListener {
 
         //Create size of PitButtons
         pitButtons = new PitButtons[12];
-
-        // Creating pitButtons for player B
-        for (int i = 11; i > 5; i--) {
-            int finalI = i - 6;
-            pitButtons[i] = new PitButtons("B", i);
-            // JLabel sideBLabel = new JLabel(pitButtons[i].toString());
-            pitButtons[i].setBackground(Color.LIGHT_GRAY);
-            pitButtons[i].setText(Integer.toString(dataModel.getPlayerBPits().get(finalI)));
-            pitButtons[i].addActionListener(e -> dataModel.playerBMove(finalI));
-            //pitPanel.add(sideBLabel);
-            pitPanel.add(pitButtons[i]);
-        }
-
-        // Creating pitButtons for player A
-        for (int i = 0; i < 6; i++) {
-            int finalI = i;
-            pitButtons[i] = new PitButtons("A", i);
-            // JLabel labelA = new JLabel("A");
-            // JLabel sideALabel = new JLabel(pitButtons[i].toString());
-            pitButtons[i].setBackground(Color.LIGHT_GRAY);
-            pitButtons[i].setText(Integer.toString(dataModel.getPlayerBPits().get(finalI)));
-            pitButtons[i].addActionListener(e -> dataModel.playerAMove(finalI));
-            // pitPanel.add(sideALabel);
-            pitPanel.add(pitButtons[i]);
-        }
-
-        /*
         for (int i= pitButtons.length-1; i>=0; i--) {
-            int finalI = i % 6; // Position of player A or B's pits
             if (i<6) {
                 pitButtons[i] = new PitButtons("A", i);
                // JLabel labelA = new JLabel("A");
                // JLabel sideALabel = new JLabel(pitButtons[i].toString());
                 pitButtons[i].setBackground(Color.LIGHT_GRAY);
-                pitButtons[i].setText(Integer.toString(dataModel.getPlayerBPits().get(finalI)));
-                pitButtons[i].addActionListener(e -> dataModel.playerAMove(finalI));
-                // pitPanel.add(sideALabel);
+                pitButtons[i].setText("A");
+                pitPanel.add(pitButtons[i]);
+                dataModel.attach(pitButtons[i]);
+
+               // pitPanel.add(sideALabel);
 
 
             } else {
                 pitButtons[i] = new PitButtons("B", i);
                // JLabel sideBLabel = new JLabel(pitButtons[i].toString());
                 pitButtons[i].setBackground(Color.LIGHT_GRAY);
-                pitButtons[i].setText(Integer.toString(dataModel.getPlayerBPits().get(finalI)));
-                pitButtons[i].addActionListener(e -> dataModel.playerBMove(finalI));
+                pitButtons[i].setText("B");
+                pitPanel.add(pitButtons[i]);
+                dataModel.attach(pitButtons[i]);
                 //pitPanel.add(sideBLabel);
             }
-            pitPanel.add(pitButtons[i]);
         }
-        */
 
         //Get mancala A score
        // JLabel mancalaALbl = new JLabel("Mancala-A Score");
         mancalaAScore = new JTextField("0");
-        mancalaAScore.setText("A-Score: " + dataModel.getPlayerAMancala());
+        mancalaAScore.setText("A-Score");
         mancalaAScore.setBackground(Color.WHITE);
         mancalaAScore.setForeground(Color.black);
         mancalaAScore.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -152,7 +122,7 @@ public class MancalaFrame implements ChangeListener {
         //Get mancala B score
       //  JLabel mancalaBLbl = new JLabel("Mancala-B Score");
         mancalaBScore = new JTextField("0");
-        mancalaBScore.setText("B-Score: " + dataModel.getPlayerBMancala());
+        mancalaBScore.setText("B-Score");
         mancalaBScore.setBackground(Color.white);
         mancalaBScore.setForeground(Color.black);
         mancalaBScore.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -275,30 +245,5 @@ public class MancalaFrame implements ChangeListener {
 
     public void add(int numStones) {
         Pit pit = new Pit(numStones);
-    }
-
-    /**
-     * Invoked when the target of the listener has changed its state.
-     *
-     * @param e a ChangeEvent object
-     */
-    @Override
-    public void stateChanged(ChangeEvent e) {
-        // Updating score
-        mancalaA.setText("Mancala-A: " + dataModel.getPlayerAMancala());
-        mancalaB.setText("Mancala-B: " + dataModel.getPlayerBMancala());
-        mancalaAScore.setText("A-Score: " + dataModel.getPlayerAMancala());
-        mancalaBScore.setText("B-Score: " + dataModel.getPlayerBMancala());
-
-        // Updating pits
-        // Player A
-        for (int i = 0; i < 6; i++) {
-            pitButtons[i].setText(Integer.toString(dataModel.getPlayerAPits().get(i)));
-        }
-        // Player B
-        for (int i = 11; i > 5; i--) {
-            int finalI = i - 6;
-            pitButtons[i].setText(Integer.toString(dataModel.getPlayerBPits().get(finalI)));
-        }
     }
 }

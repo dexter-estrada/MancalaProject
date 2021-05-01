@@ -13,7 +13,7 @@ public class Pit {
      * @param stoneAmount - number of stones
      */
     public Pit(int stoneAmount) {
-        stoneAmount = this.stoneAmount;
+        this.stoneAmount = stoneAmount;
     }
 
     /**
@@ -22,6 +22,18 @@ public class Pit {
      * @param indexPit - index of Pit
      */
     public Pit(char sidePit, int indexPit) {
+        this.sidePit = sidePit;
+        this.indexPit = indexPit;
+    }
+
+    /**
+     * Construct the Pit class with the initial stone amount given, the Pit's size, and the index of Pit
+     * @param stoneAmount - number of stones
+     * @param sidePit - side A or B of Pit
+     * @param indexPit - index of Pit
+     */
+    public Pit(int stoneAmount, char sidePit, int indexPit) {
+        this.stoneAmount = stoneAmount;
         this.sidePit = sidePit;
         this.indexPit = indexPit;
     }
@@ -63,8 +75,15 @@ public class Pit {
     /**
      *  Distribute amount of stones in the Pit to the next Pit
      */
-    private void iterateStonePit() {
+    public void iterateStonePit() {
         stoneAmount++;
+    }
+
+    /**
+     * Takes back stones distributed
+     */
+    public void decrementStonePit() {
+        stoneAmount--;
     }
 
     /**
@@ -98,6 +117,5 @@ public class Pit {
     public void setIndexPit(int index) {
         indexPit = index;
     }
-
 
 }
