@@ -9,9 +9,9 @@ import java.util.ArrayList;
  * @author Legendary: Thanh Le (thanh.le01@sjsu.edu), Samuel Lam (samuel.lam@sjsu.edu), Dexter Estrada (dexter.estrada@sjsu.edu)
  */
 public class DataModel {
-    private ArrayList<Integer> playerAPits;         // Player A's pits
+    private ArrayList<Pit> playerAPits;         // Player A's pits
     private int playerAMancala;                     // Player A's Mancala
-    private ArrayList<Integer> playerBPits;         // Player B's pits
+    private ArrayList<Pit> playerBPits;         // Player B's pits
     private int playerBMancala;                     // Player B's Mancala
 
     private int lastPlayerNo;                           // Last player who made a move
@@ -42,8 +42,8 @@ public class DataModel {
         playerAMancala = 0;
         playerBMancala = 0;
         for (int i = 0; i < 6; i++) {
-            playerAPits.add(0);
-            playerBPits.add(0);
+            playerAPits.add(new Pit(0, 'A', i));
+            playerBPits.add(new Pit(0, 'B', i));
         }
         listeners = new ArrayList<>();
     }
@@ -58,8 +58,8 @@ public class DataModel {
         playerAMancala = 0;
         playerBMancala = 0;
         for (int i = 0; i < 6; i++) {
-            playerAPits.add(numberOfStones);
-            playerBPits.add(numberOfStones);
+            playerAPits.add(new Pit(numberOfStones, 'A', i));
+            playerBPits.add(new Pit(numberOfStones, 'A', i));
         }
         listeners = new ArrayList<>();
     }
@@ -69,14 +69,14 @@ public class DataModel {
      */
     public void printText() {
         System.out.println("Player A:");
-        for (int pit : playerAPits) {
-            System.out.print(pit + " ");
+        for (Pit pit : playerAPits) {
+            System.out.print(pit.getStoneAmount() + " ");
         }
         System.out.println();
         System.out.println(playerAMancala);
         System.out.println("Player B:");
-        for (int pit : playerBPits) {
-            System.out.print(pit + " ");
+        for (Pit pit : playerBPits) {
+            System.out.print(pit.getStoneAmount() + " ");
         }
         System.out.println();
         System.out.println(playerBMancala);
@@ -89,15 +89,12 @@ public class DataModel {
      */
     public void setStones(int stones) {
         for (int i = 0; i < 6; i++) {
-            playerAPits.set(i, stones);
-            playerBPits.set(i, stones);
+            playerAPits.get(i).setStoneAmount(stones);
+            playerBPits.get(i).setStoneAmount(stones);
         }
         playerAMancala = playerBMancala = 0;
 
-        // Updating to viewers
-        for (ChangeListener listener : listeners) {
-            listener.stateChanged(new ChangeEvent(this));
-        }
+        update();
     }
 
     /**
@@ -109,21 +106,17 @@ public class DataModel {
         // Convert to index starting at 0
         //chosenPit--;
 
-        int stonesLeft = playerAPits.get(chosenPit);
+        int stonesLeft = playerAPits.get(chosenPit).getStoneAmount();
 
         if (stonesLeft != 0) {
-            playerAPits.set(chosenPit, 0);
+            playerAPits.get(chosenPit).setStoneAmount(0);
             lastPlayerNo = 0;
             lastSideNo = 0;
             lastPit = chosenPit;
             lastStones = stonesLeft;
             moveHelper(stonesLeft, chosenPit + 1);
         }
-
-        // Updating to viewers
-        for (ChangeListener listener : listeners) {
-            listener.stateChanged(new ChangeEvent(this));
-        }
+        update();
     }
 
     /**
@@ -135,21 +128,17 @@ public class DataModel {
         // Convert to index starting at 0
         //chosenPit--;
 
-        int stonesLeft = playerBPits.get(chosenPit);
+        int stonesLeft = playerBPits.get(chosenPit).getStoneAmount();
 
         if (stonesLeft != 0) {
-            playerBPits.set(chosenPit, 0);
+            playerBPits.get(chosenPit).setStoneAmount(0);
             lastPlayerNo = 1;
             lastSideNo = 1;
             lastPit = chosenPit;
             lastStones = stonesLeft;
             moveHelper(stonesLeft, chosenPit + 1);
         }
-
-        // Updating to viewers
-        for (ChangeListener listener : listeners) {
-            listener.stateChanged(new ChangeEvent(this));
-        }
+        update();
     }
 
     /**
@@ -167,7 +156,7 @@ public class DataModel {
                     lastSideNo = 1;
                     stonesLeft = moveHelper(stonesLeft, 0);
                 } else {
-                    playerAPits.set(i, playerAPits.get(i) + 1);
+                    playerAPits.get(i).iterateStonePit();
                     stonesLeft--;
                     i++;
                 }
@@ -177,7 +166,7 @@ public class DataModel {
                     lastSideNo = 0;
                     stonesLeft = moveHelper(stonesLeft, 0);
                 } else {
-                    playerBPits.set(i, playerBPits.get(i) + 1);
+                    playerBPits.get(i).iterateStonePit();
                     stonesLeft--;
                     i++;
                 }
@@ -207,19 +196,15 @@ public class DataModel {
      */
     public void undoMove() {
         if (lastPlayerNo == 0) {
-            playerAPits.set(lastPit, lastStones);
+            playerAPits.get(lastPit).setStoneAmount(lastStones);
             lastSideNo = lastPlayerNo;
             undoMoveHelper(lastStones, lastPit + 1);
         } else if (lastPlayerNo == 1) {
-            playerBPits.set(lastPit, lastStones);
+            playerBPits.get(lastPit).setStoneAmount(lastStones);
             lastSideNo = lastPlayerNo;
             undoMoveHelper(lastStones, lastPit + 1);
         }
-
-        // Updating to viewers
-        for (ChangeListener listener : listeners) {
-            listener.stateChanged(new ChangeEvent(this));
-        }
+        update();
     }
 
     /**
@@ -237,7 +222,7 @@ public class DataModel {
                     lastSideNo = 1;
                     stonesLeft = undoMoveHelper(stonesLeft, 0);
                 } else {
-                    playerAPits.set(i, playerAPits.get(i) - 1);
+                    playerAPits.get(i).decrementStonePit();
                     stonesLeft--;
                     i++;
                 }
@@ -247,7 +232,7 @@ public class DataModel {
                     lastSideNo = 0;
                     stonesLeft = undoMoveHelper(stonesLeft, 0);
                 } else {
-                    playerBPits.set(i, playerBPits.get(i) - 1);
+                    playerBPits.get(i).decrementStonePit();
                     stonesLeft--;
                     i++;
                 }
@@ -276,7 +261,7 @@ public class DataModel {
      * Gets the stones in Player A's pits
      * @return An int ArrayList of Player A's stones
      */
-    public ArrayList<Integer> getPlayerAPits() {
+    public ArrayList<Pit> getPlayerAPits() {
         return playerAPits;
     }
 
@@ -292,7 +277,7 @@ public class DataModel {
      * Get the stones in Player B's pits
      * @return An int ArrayList of Player B's stones
      */
-    public ArrayList<Integer> getPlayerBPits() {
+    public ArrayList<Pit> getPlayerBPits() {
         return playerBPits;
     }
 
@@ -310,5 +295,14 @@ public class DataModel {
      */
     public void addChangeListener(ChangeListener listener) {
         listeners.add(listener);
+    }
+
+    /**
+     * Updates the viewer every time this is called
+     */
+    private void update() {
+        for (ChangeListener listener : listeners) {
+            listener.stateChanged(new ChangeEvent(this));
+        }
     }
 }
