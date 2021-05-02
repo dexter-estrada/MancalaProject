@@ -5,15 +5,16 @@ import javax.swing.*;
  * Constructs an "undo" button that allows 3 uses per move
  * @author Legendary: Thanh Le (thanh.le01@sjsu.edu), Samuel Lam (samuel.lam@sjsu.edu), Dexter Estrada (dexter.estrada@sjsu.edu)
  */
-public class UndoButton {
-    public UndoButton() {
-        JButton undo = new JButton("undo");
-        undo.addActionListener(event -> {
+
+public class UndoButton extends JButton {
+    public UndoButton(DataModel d) {
+        setText("undo");
+        addActionListener(event -> {
             if (checkCounter() == MAXUSAGE) {
                 message();
             } else {
                 iterateCounter();
-                //reset MancalaFrame
+                d.undoMove();
             }
         });
     }
