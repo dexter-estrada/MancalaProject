@@ -6,14 +6,14 @@ import javax.swing.*;
  * @author Legendary: Thanh Le (thanh.le01@sjsu.edu), Samuel Lam (samuel.lam@sjsu.edu), Dexter Estrada (dexter.estrada@sjsu.edu)
  */
 public class UndoButton extends JButton {
-    public UndoButton() {
-        JButton undo = new JButton("undo");
-        undo.addActionListener(event -> {
+    public UndoButton(DataModel d) {
+        setText("undo");
+        addActionListener(event -> {
             if (checkCounter() == MAXUSAGE) {
                 message();
             } else {
                 iterateCounter();
-                //reset MancalaFrame
+                d.undoMove();
             }
         });
     }

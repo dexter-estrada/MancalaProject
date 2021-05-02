@@ -22,6 +22,14 @@ public class PlayerMancala {
         numStones = stone;
     }
 
+    public void incNumStones() {
+        numStones++;
+    }
+
+    public void decNumStones() {
+        numStones--;
+    }
+
     public int takeOppositeStones() {
         int oppositeStones = numStones;
         numStones = 0;
