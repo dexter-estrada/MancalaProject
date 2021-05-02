@@ -70,7 +70,7 @@ public class MancalaFrame implements ChangeListener {
         styleBoardButton.setBorder(new EmptyBorder(10, 10, 10, 10));
 
         //Stone Button
-        stoneButton = new JButton("Stone Button");
+        stoneButton = new StoneSelection(dataModel);
         stoneButton.setBackground(Color.CYAN);
         stoneButton.setBorder(new EmptyBorder(10, 10, 10, 10));
 
