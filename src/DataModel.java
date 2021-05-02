@@ -259,6 +259,57 @@ public class DataModel {
         return stonesLeft;
     }
 
+    public String checkWinnerPlayer() {
+        //Check no stones on the player !
+        boolean endGame = true;
+        for (int i = 0; i < 6; i++) {
+            for (Pit pitA : playerAPits) {
+                if (pitA.getStoneAmount() != 0) {
+                    endGame = false;
+                }
+            }
+        }
+
+        //If All stones in the pit Side A are 0, mancala B captures all stones from the opposite Pit of side A
+        if (endGame) {
+            for (int j=0; j<6; j++) {
+                playerBMancala.addNumStones(playerAPits.get(j).takeAllStones());
+            }
+        }
+
+        //Check if no stones in Pit's side B
+        if (endGame == false) {
+            endGame = true;
+            for (int i=0; i<6; i++) {
+                for (Pit pitB: playerBPits) {
+                    if (pitB.getStoneAmount() != 0) {
+                        endGame = false;
+                    }
+                }
+
+                //If All stones in the pit Side B are 0, mancala A captures all stones from the opposite Pit of side B
+                if (endGame) {
+                    for (int j=0; j<6; j++) {
+                        playerAMancala.addNumStones(playerBPits.get(j).takeAllStones());
+                    }
+                }
+            }
+
+        }
+        //End game
+        if (endGame) {
+            update();
+            if (playerBMancala.getNumStones() > playerAMancala.getNumStones()) {
+                return "Player-B Win";
+            } else {
+                return "Player-A Win";
+            }
+
+        }
+        return null;
+    }
+
+
     /**
      * Gets the stones in Player A's pits
      * @return An int ArrayList of Player A's stones
@@ -307,4 +358,6 @@ public class DataModel {
             listener.stateChanged(new ChangeEvent(this));
         }
     }
+
+
 }
