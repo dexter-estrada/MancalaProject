@@ -2,6 +2,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,7 +13,7 @@ import java.awt.event.ActionListener;
  *
  * @author Legendary: Thanh Le (thanh.le01@sjsu.edu), Samuel Lam (samuel.lam@sjsu.edu), Dexter Estrada (dexter.estrada@sjsu.edu)
  */
-public class MancalaFrame {
+public class MancalaFrame implements ChangeListener {
     private JFrame mancalaFrame;
     private JPanel buttonPanel;
     private JPanel pitPanel;
@@ -59,8 +60,7 @@ public class MancalaFrame {
         mancalaB.setBorder(new EmptyBorder(10, 40, 10, 40));
 
         //Undo Button
-        undoButton = new JButton("Undo");
-        undoButton.addActionListener(e -> dataModel.undoMove());
+        undoButton = new UndoButton(dataModel);
         undoButton.setBackground(Color.PINK);
         undoButton.setBorder(new EmptyBorder(10, 10, 10, 10));
 
@@ -281,7 +281,6 @@ public class MancalaFrame {
      *
      * @param e a ChangeEvent object
      */
-   // @Override
     public void stateChanged(ChangeEvent e) {
         // Updating score
         mancalaA.setText("Mancala-A: " + dataModel.getPlayerAMancala().getNumStones());

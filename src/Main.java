@@ -6,11 +6,11 @@
 public class Main {
     public static void main(String[] args) {
 
-       DataModel dataModel = new DataModel();
+       DataModel dataModel = new DataModel(4);
        MancalaFrame mancalaFrame  = new MancalaFrame(dataModel);
+       dataModel.addChangeListener(mancalaFrame);
         // PitButtons pitButtons =  new PitButtons();
        // StyleBoardGame styleBoardGame = new StyleBoardGame();
-       // dataModel.addChangeListener(mancalaFrame);
         //UndoButton undoButton = new UndoButton();
         //StoneSelection stoneSelection = new StoneSelection();
     }

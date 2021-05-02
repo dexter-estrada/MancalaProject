@@ -7,14 +7,14 @@ import javax.swing.*;
  */
 
 public class UndoButton extends JButton {
-    public UndoButton() {
-        JButton undo = new JButton("undo");
-        undo.addActionListener(event -> {
+    public UndoButton(DataModel d) {
+        setText("undo");
+        addActionListener(event -> {
             if (checkCounter() == MAXUSAGE) {
                 message();
             } else {
                 iterateCounter();
-                //reset MancalaFrame
+                d.undoMove();
             }
         });
     }
