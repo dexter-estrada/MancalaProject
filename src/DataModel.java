@@ -3,8 +3,9 @@ import javax.swing.event.ChangeListener;
 import java.util.ArrayList;
 
 /**
- * Description
- *
+ * The numerical representation of a Mancala board
+ * Player A's side consists of pits A1-A6 and their Mancala
+ * Player B's side consists of pits B1-B6 and their Mancala
  * @author Legendary: Thanh Le (thanh.le01@sjsu.edu), Samuel Lam (samuel.lam@sjsu.edu), Dexter Estrada (dexter.estrada@sjsu.edu)
  */
 public class DataModel {
