@@ -1,3 +1,4 @@
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.util.ArrayList;
@@ -6,6 +7,7 @@ import java.util.ArrayList;
  * The numerical representation of a Mancala board
  * Player A's side consists of pits A1-A6 and their Mancala
  * Player B's side consists of pits B1-B6 and their Mancala
+ *
  * @author Legendary: Thanh Le (thanh.le01@sjsu.edu), Samuel Lam (samuel.lam@sjsu.edu), Dexter Estrada (dexter.estrada@sjsu.edu)
  */
 public class DataModel {
@@ -13,6 +15,9 @@ public class DataModel {
     private PlayerMancala playerAMancala;                     // Player A's Mancala
     private ArrayList<Pit> playerBPits;         // Player B's pits
     private PlayerMancala playerBMancala;                     // Player B's Mancala
+    private int playerAUndoCounter = 0;
+    private int playerBUndoCounter = 0;
+    private final int MAXUNDOUSAGE = 3;
 
     // Tracks the last move that was made
     private int lastPlayerNo;                           // Last player who made a move
@@ -51,6 +56,7 @@ public class DataModel {
 
     /**
      * Fills the pits with a user-defined set of stones
+     *
      * @param numberOfStones The number of pits per stone
      */
     public DataModel(int numberOfStones) {
@@ -86,6 +92,7 @@ public class DataModel {
 
     /**
      * Sets the number of stones for all the pits and resets the score
+     *
      * @param stones The number of stones to set per pit
      */
     public void setStones(int stones) {
@@ -102,6 +109,7 @@ public class DataModel {
     /**
      * Removes the stones from player A's selected pit
      * and distributes them to sequential pits except for player B's Mancala
+     *
      * @param chosenPit An integer from 0 - 5
      */
     public void playerAMove(int chosenPit) {
@@ -118,12 +126,14 @@ public class DataModel {
             lastStones = stonesLeft;
             moveHelper(stonesLeft, chosenPit + 1);
         }
+        playerBUndoCounter = 0;
         update();
     }
 
     /**
      * Removes the stones from player B's selected pit
      * and distribute them to sequential pits except for player A's Mancala
+     *
      * @param chosenPit An integer from 0 - 5
      */
     public void playerBMove(int chosenPit) {
@@ -140,13 +150,15 @@ public class DataModel {
             lastStones = stonesLeft;
             moveHelper(stonesLeft, chosenPit + 1);
         }
+        playerAUndoCounter = 0;
         update();
     }
 
     /**
      * Recursively adds the stones to subsequent pits and Mancala
+     *
      * @param stonesLeft remaining stones to distribute
-     * @param pit Tracks which pit the recursion starts
+     * @param pit        Tracks which pit the recursion starts
      * @return The remaining number of stones
      */
     private int moveHelper(int stonesLeft, int pit) {
@@ -179,6 +191,7 @@ public class DataModel {
 
     /**
      * Adds a point to a mancala
+     *
      * @param stonesLeft Remaining stones to distribute
      * @return The remaining number of stones
      */
@@ -211,8 +224,9 @@ public class DataModel {
 
     /**
      * Recursively subtracts subsequent pits and mancala
+     *
      * @param stonesLeft Stones left to take
-     * @param pit Starting pit number
+     * @param pit        Starting pit number
      * @return Remaining number of stones
      */
     private int undoMoveHelper(int stonesLeft, int pit) {
@@ -245,6 +259,7 @@ public class DataModel {
 
     /**
      * Subtracts a point from a mancala
+     *
      * @param stonesLeft Stones left to take
      * @return The remaining number of stones to take
      */
@@ -272,7 +287,7 @@ public class DataModel {
 
         //If All stones in the pit Side A are 0, mancala B captures all stones from the opposite Pit of side A
         if (endGame) {
-            for (int j=0; j<6; j++) {
+            for (int j = 0; j < 6; j++) {
                 playerBMancala.addNumStones(playerBPits.get(j).takeAllStones());
             }
         }
@@ -280,8 +295,8 @@ public class DataModel {
         //Check if no stones in Pit's side B
         if (endGame == false) {
             endGame = true;
-            for (int i=0; i<6; i++) {
-                for (Pit pitB: playerBPits) {
+            for (int i = 0; i < 6; i++) {
+                for (Pit pitB : playerBPits) {
                     if (pitB.getStoneAmount() != 0) {
                         endGame = false;
                     }
@@ -289,7 +304,7 @@ public class DataModel {
 
                 //If All stones in the pit Side B are 0, mancala A captures all stones from the opposite Pit of side B
                 if (endGame) {
-                    for (int j=0; j<6; j++) {
+                    for (int j = 0; j < 6; j++) {
                         playerAMancala.addNumStones(playerAPits.get(j).takeAllStones());
                     }
                 }
@@ -312,6 +327,7 @@ public class DataModel {
 
     /**
      * Gets the stones in Player A's pits
+     *
      * @return An int ArrayList of Player A's stones
      */
     public ArrayList<Pit> getPlayerAPits() {
@@ -320,6 +336,7 @@ public class DataModel {
 
     /**
      * Gets the score of Player A
+     *
      * @return An int of Player A's current score
      */
     public PlayerMancala getPlayerAMancala() {
@@ -328,6 +345,7 @@ public class DataModel {
 
     /**
      * Get the stones in Player B's pits
+     *
      * @return An int ArrayList of Player B's stones
      */
     public ArrayList<Pit> getPlayerBPits() {
@@ -336,6 +354,7 @@ public class DataModel {
 
     /**
      * Get the score of Player B
+     *
      * @return An int of Player B's current score
      */
     public PlayerMancala getPlayerBMancala() {
@@ -344,6 +363,7 @@ public class DataModel {
 
     /**
      * Adds a viewer
+     *
      * @param listener A class that implements ChangeListener
      */
     public void addChangeListener(ChangeListener listener) {
@@ -357,5 +377,35 @@ public class DataModel {
         for (ChangeListener listener : listeners) {
             listener.stateChanged(new ChangeEvent(this));
         }
+    }
+
+    public void iterateUndoCounter() {
+        if(lastPlayerNo == 0) playerAUndoCounter++;
+        else playerBUndoCounter++;
+    }
+
+    public void resetPlayerCounter(int counter) {
+        counter = 0;
+    }
+
+    public boolean checkUndoCounter() {
+        if(lastPlayerNo == 0) {
+            if(playerAUndoCounter == MAXUNDOUSAGE) {
+                undoMessage();
+                return false;
+            } else return true;
+        } else {
+            if(playerBUndoCounter == MAXUNDOUSAGE) {
+                undoMessage();
+                return false;
+            } else return true;
+        }
+    }
+
+    private void undoMessage() {
+        String text = "Maximum uses of the undo button have been reached. Please select a pit.";
+        String title = "Maximum Uses Reached";
+        JFrame popup = new JFrame();
+        JOptionPane.showMessageDialog(popup, text, title, JOptionPane.WARNING_MESSAGE);
     }
 }

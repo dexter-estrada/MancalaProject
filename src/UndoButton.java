@@ -3,6 +3,7 @@ import javax.swing.*;
 /**
  * Description
  * Constructs an "undo" button that allows 3 uses per move
+ *
  * @author Legendary: Thanh Le (thanh.le01@sjsu.edu), Samuel Lam (samuel.lam@sjsu.edu), Dexter Estrada (dexter.estrada@sjsu.edu)
  */
 
@@ -13,10 +14,18 @@ public class UndoButton extends JButton {
             if (checkCounter() == MAXUSAGE) {
                 message();
             } else {
-                iterateCounter();
-                d.undoMove();
+                if (
+                        d.checkUndoCounter()) {
+                        d.iterateUndoCounter();
+                        iterateCounter();
+                        d.undoMove();
+                }
             }
         });
+    }
+
+    public UndoButton() {
+
     }
 
     /*
@@ -49,13 +58,13 @@ public class UndoButton extends JButton {
      *  @param none
      */
     private void message() {
-        String text = "Maximum uses of the undo button have been reached. Please select a pit.";
-        String title = "Maximum Uses Reached";
+        String text = "You can not undo more than once without selecting a pit. Please select a pit.";
+        String title = "Undo Error";
         JFrame popup = new JFrame();
         JOptionPane.showMessageDialog(popup, text, title, JOptionPane.WARNING_MESSAGE);
     }
 
     private int counter = 0;
-    private final int MAXUSAGE = 3;
+    private final int MAXUSAGE = 1;
 
 }

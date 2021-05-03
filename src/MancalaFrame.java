@@ -24,7 +24,7 @@ public class MancalaFrame extends JFrame implements ChangeListener {
     private JButton styleBoardButton;
     private JButton mancalaA;
     private JButton mancalaB;
-    private JButton undoButton;
+    private static UndoButton undoButton;
     private JButton stoneButton;
     private JTextField mancalaAScore;
     private JTextField mancalaBScore;
@@ -239,8 +239,12 @@ public class MancalaFrame extends JFrame implements ChangeListener {
      *
      * @return - undo choice
      */
-    public JButton getUndoButton() {
+    public static JButton getUndoButton() {
         return undoButton;
+    }
+
+    public static void resetUndoCounter() {
+        undoButton.resetCounter();
     }
 
     /**
