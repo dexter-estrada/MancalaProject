@@ -412,12 +412,22 @@ public class DataModel {
      * @return true if maximum has not been met and false if otherwise
      */
     public boolean checkUndoCounter() {
-        if(lastPlayerNo == 0) {
-            if(PlayerAUndoCounter == MAXUNDOUSAGE) return false;
-            else return true;
+        if (lastPlayerNo == 0) {
+            if (hasExtra) {
+                if (PlayerBUndoCounter == MAXUNDOUSAGE) return false;
+                else return true;
+            } else {
+                if (PlayerAUndoCounter == MAXUNDOUSAGE) return false;
+                else return true;
+            }
         } else {
-            if(PlayerBUndoCounter == MAXUNDOUSAGE) return false;
-            else return true;
+            if (hasExtra) {
+                if (PlayerAUndoCounter == MAXUNDOUSAGE) return false;
+                else return true;
+            } else {
+                if (PlayerBUndoCounter == MAXUNDOUSAGE) return false;
+                else return true;
+            }
         }
     }
 
@@ -425,7 +435,19 @@ public class DataModel {
      * Checks last player and iterates their undo counter
      */
     public void iterateUndoCounter() {
-        if(lastPlayerNo == 0) PlayerAUndoCounter++;
-        else PlayerBUndoCounter++;
+        if (lastPlayerNo == 0) {
+            if (hasExtra) {
+                PlayerBUndoCounter++;
+            } else {
+                PlayerAUndoCounter++;
+            }
+        }
+        else {
+            if (hasExtra) {
+                PlayerAUndoCounter++;
+            } else {
+                PlayerBUndoCounter++;
+            }
+        }
     }
 }
