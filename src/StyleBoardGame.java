@@ -20,9 +20,6 @@ public class StyleBoardGame extends JButton {
         int choice = JOptionPane.showOptionDialog(popup, "Please select a board style", "Style Selection", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, text, text[0]);
 
         if (choice == 0) {
-            //for (int i=0; i<pitButtons.length; i++) {
-
-            //}
             setDayStyle(mancalaFrame, pitButtons);
         } else if (choice == 1) {
             setNightStyle(mancalaFrame, pitButtons);
