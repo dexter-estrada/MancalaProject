@@ -19,6 +19,7 @@ public class DataModel {
     private int lastStones;                             // Number of stones used last turn
     private int lastSideNo;                             // Tracks which side was last selected
     private int lastPit;                                // Tracks which pit was last selected
+    private boolean hasExtra;                           // Tracks if one player has an extra move
 
     private ArrayList<ChangeListener> listeners;    // Listeners attached to the DataModel
 
@@ -96,7 +97,10 @@ public class DataModel {
         playerAMancala.setNumStones(0);
         playerBMancala.setNumStones(0);
         lastPlayerNo = -1;          // First move
-
+        lastStones = 0;
+        lastSideNo = 0;
+        lastPit = 0;
+        hasExtra = false;
         update();
     }
 
@@ -119,7 +123,11 @@ public class DataModel {
                 lastSideNo = 0;
                 lastPit = chosenPit;
                 lastStones = stonesLeft;
+                hasExtra = false;
                 moveHelper(stonesLeft, chosenPit + 1);
+                if (hasExtra) {
+                    lastPlayerNo = 1;
+                }
             }
             update();
         }
@@ -144,7 +152,11 @@ public class DataModel {
                 lastSideNo = 1;
                 lastPit = chosenPit;
                 lastStones = stonesLeft;
+                hasExtra = false;
                 moveHelper(stonesLeft, chosenPit + 1);
+                if (hasExtra) {
+                    lastPlayerNo = 0;
+                }
             }
             update();
         }
@@ -193,17 +205,13 @@ public class DataModel {
         if (lastPlayerNo == 0 && lastSideNo == 0) {
             playerAMancala.incNumStones();
             stonesLeft--;
-            // Extra move when ended up at mancala
-            if (stonesLeft == 0) {
-                lastPlayerNo = 1;
-            }
         } else if (lastPlayerNo == 1 && lastSideNo == 1) {
             playerBMancala.incNumStones();
             stonesLeft--;
-            // Extra move when ended up at mancala
-            if (stonesLeft == 0) {
-                lastPlayerNo = 0;
-            }
+        }
+        // Extra move when ended up at mancala
+        if (stonesLeft == 0) {
+            hasExtra = true;
         }
         return stonesLeft;
     }
@@ -213,15 +221,33 @@ public class DataModel {
      */
     public void undoMove() {
         if (lastPlayerNo == 0) {
-            playerAPits.get(lastPit).setStoneAmount(lastStones);
-            lastSideNo = lastPlayerNo;
-            undoMoveHelper(lastStones, lastPit + 1);
-            lastPlayerNo = 1;
+            if (hasExtra) {
+                playerBPits.get(lastPit).setStoneAmount(lastStones);
+                lastSideNo = 1;
+                lastPlayerNo = 1;
+                undoMoveHelper(lastStones, lastPit + 1);
+                lastPlayerNo = 0;
+                hasExtra = false;
+            } else {
+                playerAPits.get(lastPit).setStoneAmount(lastStones);
+                lastSideNo = lastPlayerNo;
+                undoMoveHelper(lastStones, lastPit + 1);
+                lastPlayerNo = 1;
+            }
         } else if (lastPlayerNo == 1) {
-            playerBPits.get(lastPit).setStoneAmount(lastStones);
-            lastSideNo = lastPlayerNo;
-            undoMoveHelper(lastStones, lastPit + 1);
-            lastPlayerNo = 0;
+            if (hasExtra) {
+                playerAPits.get(lastPit).setStoneAmount(lastStones);
+                lastSideNo = 0;
+                lastPlayerNo = 0;
+                undoMoveHelper(lastStones, lastPit + 1);
+                lastPlayerNo = 1;
+                hasExtra = false;
+            } else {
+                playerBPits.get(lastPit).setStoneAmount(lastStones);
+                lastSideNo = lastPlayerNo;
+                undoMoveHelper(lastStones, lastPit + 1);
+                lastPlayerNo = 0;
+            }
         }
         update();
     }
