@@ -8,13 +8,11 @@ import java.awt.*;
  */
 public class StyleBoardGame extends JButton {
     public JFrame mancalaFrame;
-    public DataModel dataModel;
     public  PitButtons[] pitButtons;
 
     StyleBoardGame(JFrame mancalaFrame, PitButtons[] pitButtons) {
         this.mancalaFrame = mancalaFrame;
         this.pitButtons = pitButtons;
-        //this.pitButtons = pitButtons;
         setText("Style Board Button");
         addActionListener(e -> {
             JFrame popup = new JFrame();
@@ -31,9 +29,9 @@ public class StyleBoardGame extends JButton {
 
     void setDayStyle() {
         mancalaFrame.setBackground(Color.YELLOW);
-        for (int i = 0; i < pitButtons.length; i++) {
-            pitButtons[i].setBackground(Color.RED);
-            pitButtons[i].setForeground(Color.BLACK);
+        for (PitButtons pitButton : pitButtons) {
+            pitButton.setBackground(Color.RED);
+            pitButton.setForeground(Color.BLACK);
         }
     }
 
