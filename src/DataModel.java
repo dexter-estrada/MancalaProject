@@ -19,6 +19,7 @@ public class DataModel {
     // Tracks the last move that was made
     private int lastPlayerNo = -1;                      // Last player who made a move
     private int lastStones;                             // Number of stones used last turn
+    private int stonesStolen;                           // Tracks number of stones stolen from pit
     private int lastSideNo;                             // Tracks which side was last selected
     private int lastPit;                                // Tracks which pit was last selected
     private boolean hasExtra;                           // Tracks if one player has an extra move
@@ -98,8 +99,12 @@ public class DataModel {
         }
         playerAMancala.setNumStones(0);
         playerBMancala.setNumStones(0);
+        PlayerAUndoCounter = 0;
+        PlayerBUndoCounter = 0;
+        UndoButton.resetCounter();
         lastPlayerNo = -1;          // First move
         lastStones = 0;
+        stonesStolen = 0;
         lastSideNo = 0;
         lastPit = 0;
         hasExtra = false;
