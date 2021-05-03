@@ -45,7 +45,6 @@ public class StoneSelection extends JButton {
                 pitStones.add(numStones);
             }
         });
-
         fourStonesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
