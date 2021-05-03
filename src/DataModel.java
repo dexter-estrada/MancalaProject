@@ -288,7 +288,7 @@ public class DataModel {
         //If All stones in the pit Side A are 0, mancala B captures all stones from the opposite Pit of side A
         if (endGame) {
             for (int j=0; j<6; j++) {
-                playerBMancala.addNumStones(playerAPits.get(j).takeAllStones());
+                playerBMancala.addNumStones(playerBPits.get(j).takeAllStones());
             }
         }
 
@@ -305,7 +305,7 @@ public class DataModel {
                 //If All stones in the pit Side B are 0, mancala A captures all stones from the opposite Pit of side B
                 if (endGame) {
                     for (int j=0; j<6; j++) {
-                        playerAMancala.addNumStones(playerBPits.get(j).takeAllStones());
+                        playerAMancala.addNumStones(playerAPits.get(j).takeAllStones());
                     }
                 }
             }
@@ -373,6 +373,4 @@ public class DataModel {
             listener.stateChanged(new ChangeEvent(this));
         }
     }
-
-
 }
