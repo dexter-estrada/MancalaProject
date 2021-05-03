@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
  *
  * @author Legendary: Thanh Le (thanh.le01@sjsu.edu), Samuel Lam (samuel.lam@sjsu.edu), Dexter Estrada (dexter.estrada@sjsu.edu)
  */
-public class MancalaFrame implements ChangeListener {
+public class MancalaFrame extends JFrame implements ChangeListener {
     private JFrame mancalaFrame;
     private JPanel buttonPanel;
     private JPanel pitPanel;
@@ -33,6 +33,7 @@ public class MancalaFrame implements ChangeListener {
 
     final int MANCALA_FRAME_WIDTH = 850;
     final int MANCALA_FRAME_HEIGHT = 350;
+    private boolean checkWinner;
 
 
     /**
@@ -299,9 +300,22 @@ public class MancalaFrame implements ChangeListener {
             int finalI = i - 6;
             pitButtons[i].setText(Integer.toString(dataModel.getPlayerBPits().get(finalI).getStoneAmount()));
         }
+
+        if (!checkWinner) {
+            checkWinner = true;
+            String playerWinner = dataModel.checkWinnerPlayer();
+            if (playerWinner != null) {
+               JFrame frame = new JFrame();
+                if (playerWinner.equals("Player-A Win"))
+                    JOptionPane.showMessageDialog(frame, "Player A Win!", "Winner of Mancala Game", JOptionPane.PLAIN_MESSAGE);
+                else
+                    JOptionPane.showMessageDialog(frame, "Player B Win!", "Winner of Mancala Game", JOptionPane.PLAIN_MESSAGE);
+            }
+        }
     }
 
     public void setBackground(Color yellow) {
-        mancalaFrame.setBackground(Color.WHITE);
+        //mancalaFrame.setBackground(Color.WHITE);
     }
+
 }
