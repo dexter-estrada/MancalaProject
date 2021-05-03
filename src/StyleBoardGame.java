@@ -29,6 +29,7 @@ public class StyleBoardGame extends JButton {
 
     void setDayStyle() {
         mancalaFrame.setBackground(Color.YELLOW);
+        mancalaFrame.repaint();
         for (PitButtons pitButton : pitButtons) {
             pitButton.setBackground(Color.RED);
             pitButton.setForeground(Color.BLACK);
@@ -37,6 +38,7 @@ public class StyleBoardGame extends JButton {
 
     void setNightStyle() {
         mancalaFrame.setBackground(Color.BLACK);
+        mancalaFrame.repaint();
         for (PitButtons button : pitButtons) {
             button.setBackground(Color.BLUE);
             button.setForeground(Color.WHITE);
