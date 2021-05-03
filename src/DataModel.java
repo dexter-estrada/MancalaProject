@@ -183,7 +183,20 @@ public class DataModel {
                     lastSideNo = 1;
                     stonesLeft = moveHelper(stonesLeft, 0);
                 } else {
-                    playerAPits.get(i).iterateStonePit();
+                    // Checking if the last stone ends up in an empty pit for steal move
+                    if (playerAPits.get(i).getStoneAmount() == 0 && stonesLeft == 1) {
+                        // Taking all stones opposite of this pit and adding it to current player's Mancala plus 1
+                        int stonesStolen = playerBPits.get(5 - i).getStoneAmount();
+                        if (lastPlayerNo == 1) {
+                            playerBMancala.addNumStones(stonesStolen + 1);
+                            playerAPits.get(5 - i).setStoneAmount(0);
+                        } else {
+                            playerAMancala.addNumStones(stonesStolen + 1);
+                            playerBPits.get(5 - i).setStoneAmount(0);
+                        }
+                    } else {
+                        playerAPits.get(i).iterateStonePit();
+                    }
                     stonesLeft--;
                     i++;
                 }
@@ -193,7 +206,20 @@ public class DataModel {
                     lastSideNo = 0;
                     stonesLeft = moveHelper(stonesLeft, 0);
                 } else {
-                    playerBPits.get(i).iterateStonePit();
+                    // Checking if the last stone ends up in an empty pit for steal move
+                    if (playerBPits.get(i).getStoneAmount() == 0 && stonesLeft == 1) {
+                        // Taking all stones opposite of this pit and adding it to current player's Mancala plus 1
+                        int stonesStolen = playerAPits.get(5 - i).getStoneAmount();
+                        if (lastPlayerNo == 1) {
+                            playerBMancala.addNumStones(stonesStolen + 1);
+                            playerAPits.get(5 - i).setStoneAmount(0);
+                        } else {
+                            playerAMancala.addNumStones(stonesStolen + 1);
+                            playerBPits.get(5 - i).setStoneAmount(0);
+                        }
+                    } else {
+                        playerBPits.get(i).iterateStonePit();
+                    }
                     stonesLeft--;
                     i++;
                 }
