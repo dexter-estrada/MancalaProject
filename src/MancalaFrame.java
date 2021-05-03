@@ -96,10 +96,11 @@ public class MancalaFrame extends JFrame implements ChangeListener {
         // Creating pitButtons for player B
         for (int i = 11; i > 5; i--) {
             int finalI = i - 6;
+            int index = finalI + 1;
             pitButtons[i] = new PitButtons("B", i);
             // JLabel sideBLabel = new JLabel(pitButtons[i].toString());
             pitButtons[i].setBackground(Color.LIGHT_GRAY);
-            pitButtons[i].setText(Integer.toString(dataModel.getPlayerBPits().get(finalI).getStoneAmount()));
+            pitButtons[i].setText("B" + index + ": " + Integer.toString(dataModel.getPlayerBPits().get(finalI).getStoneAmount()));
             pitButtons[i].addActionListener(e -> dataModel.playerBMove(finalI));
             //pitPanel.add(sideBLabel);
             pitPanel.add(pitButtons[i]);
@@ -108,11 +109,12 @@ public class MancalaFrame extends JFrame implements ChangeListener {
         // Creating pitButtons for player A
         for (int i = 0; i < 6; i++) {
             int finalI = i;
+            int index = finalI + 1;
             pitButtons[i] = new PitButtons("A", i);
             // JLabel labelA = new JLabel("A");
             // JLabel sideALabel = new JLabel(pitButtons[i].toString());
             pitButtons[i].setBackground(Color.LIGHT_GRAY);
-            pitButtons[i].setText(Integer.toString(dataModel.getPlayerBPits().get(finalI).getStoneAmount()));
+            pitButtons[i].setText("A" + index + ": " + Integer.toString(dataModel.getPlayerBPits().get(finalI).getStoneAmount()));
             pitButtons[i].addActionListener(e -> dataModel.playerAMove(finalI));
             // pitPanel.add(sideALabel);
             pitPanel.add(pitButtons[i]);
