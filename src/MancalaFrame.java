@@ -41,6 +41,11 @@ public class MancalaFrame implements ChangeListener {
      */
     public MancalaFrame(DataModel dataModel) {
         this.dataModel = dataModel;
+        // Creating mancalaFrame
+        mancalaFrame = new JFrame();
+        // Create size of PitButtons
+        pitButtons = new PitButtons[12];
+
         //Get score mancala A
         mancalaA = new JButton("Mancala-A: " + dataModel.getPlayerAMancala().getNumStones());
         mancalaA.setFont(new Font("Arial", Font.PLAIN, 10));
@@ -65,7 +70,7 @@ public class MancalaFrame implements ChangeListener {
         undoButton.setBorder(new EmptyBorder(10, 10, 10, 10));
 
         //Style Board Button
-        styleBoardButton = new JButton("Style Board Button");
+        styleBoardButton = new StyleBoardGame(mancalaFrame, pitButtons);
         styleBoardButton.setBackground(Color.RED);
         styleBoardButton.setBorder(new EmptyBorder(10, 10, 10, 10));
 
@@ -88,9 +93,6 @@ public class MancalaFrame implements ChangeListener {
         pitPanel.setLayout(new GridLayout(2, 6));
         pitPanel.setBorder(new LineBorder(Color.BLACK));
         pitPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
-
-        //Create size of PitButtons
-        pitButtons = new PitButtons[12];
 
         // Creating pitButtons for player B
         for (int i = 11; i > 5; i--) {
@@ -174,7 +176,6 @@ public class MancalaFrame implements ChangeListener {
         boardGamePanel.add(buttonPanel, BorderLayout.SOUTH);
 
         //Mancala Frame
-        mancalaFrame = new JFrame();
         mancalaFrame.add(boardGamePanel);
         mancalaFrame.setTitle("Mancala Game");
         mancalaFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
