@@ -306,12 +306,12 @@ public class MancalaFrame extends JFrame implements ChangeListener {
         // Updating pits
         // Player A
         for (int i = 0; i < 6; i++) {
-            pitButtons[i].setText(Integer.toString(dataModel.getPlayerAPits().get(i).getStoneAmount()));
+            pitButtons[i].setText("A" + i + ": " + Integer.toString(dataModel.getPlayerAPits().get(i).getStoneAmount()));
         }
         // Player B
         for (int i = 11; i > 5; i--) {
             int finalI = i - 6;
-            pitButtons[i].setText(Integer.toString(dataModel.getPlayerBPits().get(finalI).getStoneAmount()));
+            pitButtons[i].setText("B" + finalI + ": " + Integer.toString(dataModel.getPlayerBPits().get(finalI).getStoneAmount()));
         }
 
         if (!checkWinner) {
