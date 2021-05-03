@@ -130,6 +130,7 @@ public class DataModel {
                 lastSideNo = 0;
                 lastPit = chosenPit;
                 lastStones = stonesLeft;
+                stonesStolen = 0;
                 hasExtra = false;
                 moveHelper(stonesLeft, chosenPit + 1);
                 if (hasExtra) {
@@ -161,6 +162,7 @@ public class DataModel {
                 lastSideNo = 1;
                 lastPit = chosenPit;
                 lastStones = stonesLeft;
+                stonesStolen = 0;
                 hasExtra = false;
                 moveHelper(stonesLeft, chosenPit + 1);
                 if (hasExtra) {
@@ -191,7 +193,7 @@ public class DataModel {
                     // Checking if the last stone ends up in an empty pit for steal move
                     if (playerAPits.get(i).getStoneAmount() == 0 && stonesLeft == 1) {
                         // Taking all stones opposite of this pit and adding it to current player's Mancala plus 1
-                        int stonesStolen = playerBPits.get(5 - i).getStoneAmount();
+                        stonesStolen = playerBPits.get(5 - i).getStoneAmount();
                         if (lastPlayerNo == 1) {
                             playerBMancala.addNumStones(stonesStolen + 1);
                             playerAPits.get(5 - i).setStoneAmount(0);
@@ -214,7 +216,7 @@ public class DataModel {
                     // Checking if the last stone ends up in an empty pit for steal move
                     if (playerBPits.get(i).getStoneAmount() == 0 && stonesLeft == 1) {
                         // Taking all stones opposite of this pit and adding it to current player's Mancala plus 1
-                        int stonesStolen = playerAPits.get(5 - i).getStoneAmount();
+                        stonesStolen = playerAPits.get(5 - i).getStoneAmount();
                         if (lastPlayerNo == 1) {
                             playerBMancala.addNumStones(stonesStolen + 1);
                             playerAPits.get(5 - i).setStoneAmount(0);
