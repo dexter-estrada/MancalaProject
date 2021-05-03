@@ -13,7 +13,9 @@ public class DataModel {
     private PlayerMancala playerAMancala;                     // Player A's Mancala
     private ArrayList<Pit> playerBPits;         // Player B's pits
     private PlayerMancala playerBMancala;                     // Player B's Mancala
-
+    private int PlayerAUndoCounter = 0;
+    private int PlayerBUndoCounter = 0;
+    private final int MAXUNDOUSAGE = 3;
     // Tracks the last move that was made
     private int lastPlayerNo = -1;                      // Last player who made a move
     private int lastStones;                             // Number of stones used last turn
@@ -129,6 +131,8 @@ public class DataModel {
                     lastPlayerNo = 1;
                 }
             }
+            UndoButton.resetCounter();
+            PlayerBUndoCounter = 0;
             update();
         }
     }
@@ -158,6 +162,8 @@ public class DataModel {
                     lastPlayerNo = 0;
                 }
             }
+            UndoButton.resetCounter();
+            PlayerAUndoCounter = 0;
             update();
         }
     }
@@ -400,5 +406,26 @@ public class DataModel {
         for (ChangeListener listener : listeners) {
             listener.stateChanged(new ChangeEvent(this));
         }
+    }
+    /**
+     * Checks if maximum uses of undo have been met
+     * @return true if maximum has not been met and false if otherwise
+     */
+    public boolean checkUndoCounter() {
+        if(lastPlayerNo == 0) {
+            if(PlayerAUndoCounter == MAXUNDOUSAGE) return false;
+            else return true;
+        } else {
+            if(PlayerBUndoCounter == MAXUNDOUSAGE) return false;
+            else return true;
+        }
+    }
+
+    /**
+     * Checks last player and iterates their undo counter
+     */
+    public void iterateUndoCounter() {
+        if(lastPlayerNo == 0) PlayerAUndoCounter++;
+        else PlayerBUndoCounter++;
     }
 }
