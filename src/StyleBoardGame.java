@@ -6,15 +6,15 @@ import java.awt.*;
  *
  * @author Legendary: Thanh Le (thanh.le01@sjsu.edu), Samuel Lam (samuel.lam@sjsu.edu), Dexter Estrada (dexter.estrada@sjsu.edu)
  */
-public class StyleBoardGame {
+public class StyleBoardGame{
     StyleBoardGame() {
         JFrame popup = new JFrame();
         Object[] text = {"Day Style", "Night Style"};
         int choice = JOptionPane.showOptionDialog(popup, "Please select a board style", "Style Selection", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, text, text[0]);
         if (choice == 0) {
-            setDayStyle(mancalaFrame, pitButtons);
+            //setDayStyle(mancalaFrame, pitButtons);
         } else if (choice == 1) {
-            setNightStyle(mancalaFrame, pitButtons);
+            //setNightStyle(mancalaFrame, pitButtons);
         }
     }
 

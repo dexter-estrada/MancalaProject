@@ -9,6 +9,7 @@ public class UndoButton {
     public UndoButton() {
         JButton undo = new JButton("undo");
         undo.addActionListener(event -> {
+            System.out.println("You've hit the undo button!");
             if (checkCounter() == MAXUSAGE) {
                 message();
             } else {
