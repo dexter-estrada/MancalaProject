@@ -15,7 +15,7 @@ public class DataModel {
     private PlayerMancala playerBMancala;                     // Player B's Mancala
 
     // Tracks the last move that was made
-    private int lastPlayerNo = 1;                       // Last player who made a move
+    private int lastPlayerNo = -1;                      // Last player who made a move
     private int lastStones;                             // Number of stones used last turn
     private int lastSideNo;                             // Tracks which side was last selected
     private int lastPit;                                // Tracks which pit was last selected
@@ -95,6 +95,7 @@ public class DataModel {
         }
         playerAMancala.setNumStones(0);
         playerBMancala.setNumStones(0);
+        lastPlayerNo = -1;          // First move
 
         update();
     }
@@ -109,7 +110,7 @@ public class DataModel {
         //chosenPit--;
 
         // Checks if it's player A's turn
-        if (lastPlayerNo == 1) {
+        if (lastPlayerNo == 1 || lastPlayerNo == -1) {
             int stonesLeft = playerAPits.get(chosenPit).getStoneAmount();
 
             if (stonesLeft != 0) {
