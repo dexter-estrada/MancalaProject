@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
  *
  * @author Legendary: Thanh Le (thanh.le01@sjsu.edu), Samuel Lam (samuel.lam@sjsu.edu), Dexter Estrada (dexter.estrada@sjsu.edu)
  */
-public class MancalaFrame implements ChangeListener {
+public class MancalaFrame extends JFrame implements ChangeListener {
     private JFrame mancalaFrame;
     private JPanel buttonPanel;
     private JPanel pitPanel;
@@ -33,11 +33,12 @@ public class MancalaFrame implements ChangeListener {
 
     final int MANCALA_FRAME_WIDTH = 850;
     final int MANCALA_FRAME_HEIGHT = 350;
+    private boolean checkWinner;
 
 
     /**
      * Constructs the MancalaFrame to manage the position of PitButtons, undoButton,
-     *  * styleFrameButtons, and player score buttons.
+     * * styleFrameButtons, and player score buttons.
      */
     public MancalaFrame(DataModel dataModel) {
         this.dataModel = dataModel;
@@ -84,8 +85,6 @@ public class MancalaFrame implements ChangeListener {
         selectPanel = new JPanel();
         selectPanel.add(styleBoardButton, BorderLayout.NORTH);
         selectPanel.add(stoneButton, BorderLayout.SOUTH);
-
-
 
 
         //Create pitPanel to hold pits and mancala A and mancalaB
@@ -168,7 +167,7 @@ public class MancalaFrame implements ChangeListener {
 
         //Board game panel
         boardGamePanel = new JPanel();
-        boardGamePanel.setLayout( new BorderLayout());
+        boardGamePanel.setLayout(new BorderLayout());
         boardGamePanel.add(selectPanel, BorderLayout.NORTH);
         boardGamePanel.add(pitPanel, BorderLayout.CENTER);
         boardGamePanel.add(mancalaA, BorderLayout.EAST);
@@ -187,6 +186,7 @@ public class MancalaFrame implements ChangeListener {
 
     /**
      * Gets pit Buttons array from the PitButtons class
+     *
      * @return - pit buttons of each Mancala's side
      */
     public PitButtons[] getPitButtons() {
@@ -195,6 +195,7 @@ public class MancalaFrame implements ChangeListener {
 
     /**
      * Gets a player A score
+     *
      * @return - total stones of Mancala A
      */
     public JButton getMancalaA() {
@@ -203,6 +204,7 @@ public class MancalaFrame implements ChangeListener {
 
     /**
      * Gets a player B score
+     *
      * @return - total stones of Mancala B
      */
     public JButton getMancalaB() {
@@ -211,6 +213,7 @@ public class MancalaFrame implements ChangeListener {
 
     /**
      * Gets Stone Selection Button
+     *
      * @return - number stone selection
      */
     public JButton getStoneButton() {
@@ -224,6 +227,7 @@ public class MancalaFrame implements ChangeListener {
 
     /**
      * Gets style board button
+     *
      * @return - style board selection
      */
     public StyleBoardGame getStyleBoardButton() {
@@ -232,6 +236,7 @@ public class MancalaFrame implements ChangeListener {
 
     /**
      * Gets undo button
+     *
      * @return - undo choice
      */
     public JButton getUndoButton() {
@@ -240,6 +245,7 @@ public class MancalaFrame implements ChangeListener {
 
     /**
      * Gets a select choice JPanel from the given string select
+     *
      * @param select - play select panel
      * @return - panel for selection
      */
@@ -250,7 +256,7 @@ public class MancalaFrame implements ChangeListener {
             return selectPanel;
         } else if (select.equals("Select Stone")) {
             return selectPanel;
-        }else {
+        } else {
             return null;
         }
     }
@@ -258,6 +264,7 @@ public class MancalaFrame implements ChangeListener {
 
     /**
      * Gets a select choice JButton from the given string select
+     *
      * @param select - player select button
      * @return button selection
      */
@@ -300,9 +307,23 @@ public class MancalaFrame implements ChangeListener {
             int finalI = i - 6;
             pitButtons[i].setText(Integer.toString(dataModel.getPlayerBPits().get(finalI).getStoneAmount()));
         }
+
+        if (!checkWinner) {
+            checkWinner = true;
+            String playerWinner = dataModel.checkWinnerPlayer();
+            if (playerWinner != null) {
+                JFrame frame = new JFrame();
+                if (playerWinner.equals("Player-A Win"))
+                    JOptionPane.showMessageDialog(frame, "Player A Win!", "Winner of Mancala Game", JOptionPane.PLAIN_MESSAGE);
+                else
+                    JOptionPane.showMessageDialog(frame, "Player B Win!", "Winner of Mancala Game", JOptionPane.PLAIN_MESSAGE);
+            }
+            checkWinner = false;
+        }
     }
 
     public void setBackground(Color yellow) {
-        mancalaFrame.setBackground(Color.WHITE);
+        //mancalaFrame.setBackground(Color.WHITE);
     }
+
 }
