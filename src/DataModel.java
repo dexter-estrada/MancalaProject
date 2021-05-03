@@ -306,7 +306,19 @@ public class DataModel {
                     lastSideNo = 1;
                     stonesLeft = undoMoveHelper(stonesLeft, 0);
                 } else {
-                    playerAPits.get(i).decrementStonePit();
+                    // Checking if stones were stolen last turn
+                    if (stonesStolen > 0 && stonesLeft == 1) {
+                        if (lastPlayerNo == 1) {
+                            playerBMancala.addNumStones(-stonesStolen - 1);
+                            playerAPits.get(5 - i).setStoneAmount(stonesStolen);
+                        } else {
+                            playerAMancala.addNumStones(-stonesStolen - 1);
+                            playerBPits.get(5 - i).setStoneAmount(stonesStolen);
+                        }
+                        stonesStolen = 0;
+                    } else {
+                        playerAPits.get(i).decrementStonePit();
+                    }
                     stonesLeft--;
                     i++;
                 }
@@ -316,7 +328,19 @@ public class DataModel {
                     lastSideNo = 0;
                     stonesLeft = undoMoveHelper(stonesLeft, 0);
                 } else {
-                    playerBPits.get(i).decrementStonePit();
+                    // Checking if stones were stolen last turn
+                    if (stonesStolen > 0 && stonesLeft == 1) {
+                        if (lastPlayerNo == 1) {
+                            playerBMancala.addNumStones(-stonesStolen - 1);
+                            playerAPits.get(5 - i).setStoneAmount(stonesStolen);
+                        } else {
+                            playerAMancala.addNumStones(-stonesStolen - 1);
+                            playerBPits.get(5 - i).setStoneAmount(stonesStolen);
+                        }
+                        stonesStolen = 0;
+                    } else {
+                        playerBPits.get(i).decrementStonePit();
+                    }
                     stonesLeft--;
                     i++;
                 }
