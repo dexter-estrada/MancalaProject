@@ -216,10 +216,12 @@ public class DataModel {
             playerAPits.get(lastPit).setStoneAmount(lastStones);
             lastSideNo = lastPlayerNo;
             undoMoveHelper(lastStones, lastPit + 1);
+            lastPlayerNo = 1;
         } else if (lastPlayerNo == 1) {
             playerBPits.get(lastPit).setStoneAmount(lastStones);
             lastSideNo = lastPlayerNo;
             undoMoveHelper(lastStones, lastPit + 1);
+            lastPlayerNo = 0;
         }
         update();
     }
