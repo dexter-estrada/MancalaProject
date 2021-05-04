@@ -13,12 +13,18 @@ public class DataModel {
     private PlayerMancala playerAMancala;                     // Player A's Mancala
     private ArrayList<Pit> playerBPits;         // Player B's pits
     private PlayerMancala playerBMancala;                     // Player B's Mancala
-
+    private int PlayerAUndoCounter = 0;
+    private int PlayerBUndoCounter = 0;
+    private final int MAXUNDOUSAGE = 3;
     // Tracks the last move that was made
-    private int lastPlayerNo;                           // Last player who made a move
+    private int lastPlayerNo = -1;                      // Last player who made a move
     private int lastStones;                             // Number of stones used last turn
+    private int stonesStolen;                           // Tracks number of stones stolen from pit
     private int lastSideNo;                             // Tracks which side was last selected
     private int lastPit;                                // Tracks which pit was last selected
+    private boolean hasExtra;                           // Tracks if one player has an extra move
+    private Pit pit;
+    private int numberOfStones;
 
     private ArrayList<ChangeListener> listeners;    // Listeners attached to the DataModel
 
@@ -60,7 +66,7 @@ public class DataModel {
         playerBMancala = new PlayerMancala();
         for (int i = 0; i < 6; i++) {
             playerAPits.add(new Pit(numberOfStones, 'A', i));
-            playerBPits.add(new Pit(numberOfStones, 'A', i));
+            playerBPits.add(new Pit(numberOfStones, 'B', i));
         }
         listeners = new ArrayList<>();
     }
@@ -95,7 +101,15 @@ public class DataModel {
         }
         playerAMancala.setNumStones(0);
         playerBMancala.setNumStones(0);
-
+        PlayerAUndoCounter = 0;
+        PlayerBUndoCounter = 0;
+        UndoButton.resetCounter();
+        lastPlayerNo = -1;          // First move
+        lastStones = 0;
+        stonesStolen = 0;
+        lastSideNo = 0;
+        lastPit = 0;
+        hasExtra = false;
         update();
     }
 
@@ -108,17 +122,27 @@ public class DataModel {
         // Convert to index starting at 0
         //chosenPit--;
 
-        int stonesLeft = playerAPits.get(chosenPit).getStoneAmount();
+        // Checks if it's player A's turn
+        if (lastPlayerNo == 1 || lastPlayerNo == -1) {
+            int stonesLeft = playerAPits.get(chosenPit).getStoneAmount();
 
-        if (stonesLeft != 0) {
-            playerAPits.get(chosenPit).setStoneAmount(0);
-            lastPlayerNo = 0;
-            lastSideNo = 0;
-            lastPit = chosenPit;
-            lastStones = stonesLeft;
-            moveHelper(stonesLeft, chosenPit + 1);
+            if (stonesLeft != 0) {
+                playerAPits.get(chosenPit).setStoneAmount(0);
+                lastPlayerNo = 0;
+                lastSideNo = 0;
+                lastPit = chosenPit;
+                lastStones = stonesLeft;
+                stonesStolen = 0;
+                hasExtra = false;
+                moveHelper(stonesLeft, chosenPit + 1);
+                if (hasExtra) {
+                    lastPlayerNo = 1;
+                }
+            }
+            UndoButton.resetCounter();
+            PlayerBUndoCounter = 0;
+            update();
         }
-        update();
     }
 
     /**
@@ -130,17 +154,27 @@ public class DataModel {
         // Convert to index starting at 0
         //chosenPit--;
 
-        int stonesLeft = playerBPits.get(chosenPit).getStoneAmount();
+        // Checks if it's player B's turn
+        if (lastPlayerNo == 0) {
+            int stonesLeft = playerBPits.get(chosenPit).getStoneAmount();
 
-        if (stonesLeft != 0) {
-            playerBPits.get(chosenPit).setStoneAmount(0);
-            lastPlayerNo = 1;
-            lastSideNo = 1;
-            lastPit = chosenPit;
-            lastStones = stonesLeft;
-            moveHelper(stonesLeft, chosenPit + 1);
+            if (stonesLeft != 0) {
+                playerBPits.get(chosenPit).setStoneAmount(0);
+                lastPlayerNo = 1;
+                lastSideNo = 1;
+                lastPit = chosenPit;
+                lastStones = stonesLeft;
+                stonesStolen = 0;
+                hasExtra = false;
+                moveHelper(stonesLeft, chosenPit + 1);
+                if (hasExtra) {
+                    lastPlayerNo = 0;
+                }
+            }
+            UndoButton.resetCounter();
+            PlayerAUndoCounter = 0;
+            update();
         }
-        update();
     }
 
     /**
@@ -158,7 +192,20 @@ public class DataModel {
                     lastSideNo = 1;
                     stonesLeft = moveHelper(stonesLeft, 0);
                 } else {
-                    playerAPits.get(i).iterateStonePit();
+                    // Checking if the last stone ends up in an empty pit for steal move
+                    if (playerAPits.get(i).getStoneAmount() == 0 && stonesLeft == 1) {
+                        // Taking all stones opposite of this pit and adding it to current player's Mancala plus 1
+                        stonesStolen = playerBPits.get(5 - i).getStoneAmount();
+                        if (lastPlayerNo == 1) {
+                            playerBMancala.addNumStones(stonesStolen + 1);
+                            playerAPits.get(5 - i).setStoneAmount(0);
+                        } else {
+                            playerAMancala.addNumStones(stonesStolen + 1);
+                            playerBPits.get(5 - i).setStoneAmount(0);
+                        }
+                    } else {
+                        playerAPits.get(i).iterateStonePit();
+                    }
                     stonesLeft--;
                     i++;
                 }
@@ -168,7 +215,20 @@ public class DataModel {
                     lastSideNo = 0;
                     stonesLeft = moveHelper(stonesLeft, 0);
                 } else {
-                    playerBPits.get(i).iterateStonePit();
+                    // Checking if the last stone ends up in an empty pit for steal move
+                    if (playerBPits.get(i).getStoneAmount() == 0 && stonesLeft == 1) {
+                        // Taking all stones opposite of this pit and adding it to current player's Mancala plus 1
+                        stonesStolen = playerAPits.get(5 - i).getStoneAmount();
+                        if (lastPlayerNo == 1) {
+                            playerBMancala.addNumStones(stonesStolen + 1);
+                            playerAPits.get(5 - i).setStoneAmount(0);
+                        } else {
+                            playerAMancala.addNumStones(stonesStolen + 1);
+                            playerBPits.get(5 - i).setStoneAmount(0);
+                        }
+                    } else {
+                        playerBPits.get(i).iterateStonePit();
+                    }
                     stonesLeft--;
                     i++;
                 }
@@ -190,6 +250,10 @@ public class DataModel {
             playerBMancala.incNumStones();
             stonesLeft--;
         }
+        // Extra move when ended up at mancala
+        if (stonesLeft == 0) {
+            hasExtra = true;
+        }
         return stonesLeft;
     }
 
@@ -198,13 +262,33 @@ public class DataModel {
      */
     public void undoMove() {
         if (lastPlayerNo == 0) {
-            playerAPits.get(lastPit).setStoneAmount(lastStones);
-            lastSideNo = lastPlayerNo;
-            undoMoveHelper(lastStones, lastPit + 1);
+            if (hasExtra) {
+                playerBPits.get(lastPit).setStoneAmount(lastStones);
+                lastSideNo = 1;
+                lastPlayerNo = 1;
+                undoMoveHelper(lastStones, lastPit + 1);
+                lastPlayerNo = 0;
+                hasExtra = false;
+            } else {
+                playerAPits.get(lastPit).setStoneAmount(lastStones);
+                lastSideNo = lastPlayerNo;
+                undoMoveHelper(lastStones, lastPit + 1);
+                lastPlayerNo = 1;
+            }
         } else if (lastPlayerNo == 1) {
-            playerBPits.get(lastPit).setStoneAmount(lastStones);
-            lastSideNo = lastPlayerNo;
-            undoMoveHelper(lastStones, lastPit + 1);
+            if (hasExtra) {
+                playerAPits.get(lastPit).setStoneAmount(lastStones);
+                lastSideNo = 0;
+                lastPlayerNo = 0;
+                undoMoveHelper(lastStones, lastPit + 1);
+                lastPlayerNo = 1;
+                hasExtra = false;
+            } else {
+                playerBPits.get(lastPit).setStoneAmount(lastStones);
+                lastSideNo = lastPlayerNo;
+                undoMoveHelper(lastStones, lastPit + 1);
+                lastPlayerNo = 0;
+            }
         }
         update();
     }
@@ -224,7 +308,19 @@ public class DataModel {
                     lastSideNo = 1;
                     stonesLeft = undoMoveHelper(stonesLeft, 0);
                 } else {
-                    playerAPits.get(i).decrementStonePit();
+                    // Checking if stones were stolen last turn
+                    if (stonesStolen > 0 && stonesLeft == 1) {
+                        if (lastPlayerNo == 1) {
+                            playerBMancala.addNumStones(-stonesStolen - 1);
+                            playerAPits.get(5 - i).setStoneAmount(stonesStolen);
+                        } else {
+                            playerAMancala.addNumStones(-stonesStolen - 1);
+                            playerBPits.get(5 - i).setStoneAmount(stonesStolen);
+                        }
+                        stonesStolen = 0;
+                    } else {
+                        playerAPits.get(i).decrementStonePit();
+                    }
                     stonesLeft--;
                     i++;
                 }
@@ -234,7 +330,19 @@ public class DataModel {
                     lastSideNo = 0;
                     stonesLeft = undoMoveHelper(stonesLeft, 0);
                 } else {
-                    playerBPits.get(i).decrementStonePit();
+                    // Checking if stones were stolen last turn
+                    if (stonesStolen > 0 && stonesLeft == 1) {
+                        if (lastPlayerNo == 1) {
+                            playerBMancala.addNumStones(-stonesStolen - 1);
+                            playerAPits.get(5 - i).setStoneAmount(stonesStolen);
+                        } else {
+                            playerAMancala.addNumStones(-stonesStolen - 1);
+                            playerBPits.get(5 - i).setStoneAmount(stonesStolen);
+                        }
+                        stonesStolen = 0;
+                    } else {
+                        playerBPits.get(i).decrementStonePit();
+                    }
                     stonesLeft--;
                     i++;
                 }
@@ -270,10 +378,10 @@ public class DataModel {
             }
         }
 
-        //If All stones in the pit Side A are 0, mancala B captures all stones from the opposite Pit of side A
+        //If All stones in the pit Side A are 0, mancala B captures all stones in the Pit of side B
         if (endGame) {
             for (int j=0; j<6; j++) {
-                playerBMancala.addNumStones(playerAPits.get(j).takeAllStones());
+                playerBMancala.addNumStones(playerBPits.get(j).takeAllStones());
             }
         }
 
@@ -290,7 +398,7 @@ public class DataModel {
                 //If All stones in the pit Side B are 0, mancala A captures all stones from the opposite Pit of side B
                 if (endGame) {
                     for (int j=0; j<6; j++) {
-                        playerAMancala.addNumStones(playerBPits.get(j).takeAllStones());
+                        playerAMancala.addNumStones(playerAPits.get(j).takeAllStones());
                     }
                 }
             }
@@ -358,6 +466,68 @@ public class DataModel {
             listener.stateChanged(new ChangeEvent(this));
         }
     }
+    /**
+     * Checks if maximum uses of undo have been met
+     * @return true if maximum has not been met and false if otherwise
+     */
+    public boolean checkUndoCounter() {
+        if (lastPlayerNo == 0) {
+            if (hasExtra) {
+                if (PlayerBUndoCounter == MAXUNDOUSAGE) return false;
+                else return true;
+            } else {
+                if (PlayerAUndoCounter == MAXUNDOUSAGE) return false;
+                else return true;
+            }
+        } else {
+            if (hasExtra) {
+                if (PlayerAUndoCounter == MAXUNDOUSAGE) return false;
+                else return true;
+            } else {
+                if (PlayerBUndoCounter == MAXUNDOUSAGE) return false;
+                else return true;
+            }
+        }
+    }
+
+    /**
+     * Checks last player and iterates their undo counter
+     */
+    public void iterateUndoCounter() {
+        if (lastPlayerNo == 0) {
+            if (hasExtra) {
+                PlayerBUndoCounter++;
+            } else {
+                PlayerAUndoCounter++;
+            }
+        }
+        else {
+            if (hasExtra) {
+                PlayerAUndoCounter++;
+            } else {
+                PlayerBUndoCounter++;
+            }
+        }
+    }
 
 
+    public int getPitValue(char pitSide, int numStones) {
+
+        numStones = numberOfStones;
+        pitSide = pit.getSidePit();
+
+        if (pitSide == 'A') {
+            for (int i = 0; i < 6; i++) {
+                return playerAPits.get(i).setStoneAmount(numberOfStones);
+            }
+        }
+
+        if (pitSide == 'B') {
+            for (int i = 0; i < 6; i++) {
+                return playerBPits.get(i).setStoneAmount(numberOfStones);
+            }
+        }
+
+        return -1;
+    }
 }
