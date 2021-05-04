@@ -120,7 +120,7 @@ public class PitButtons extends JButton implements ChangeListener {
             int xModulo = i%dimension;
             int yModulo = i%dimension;
 
-            int x = xModulo*(width+4) + 30;
+            int x = xModulo*(width+4) + 10;
             int y = yModulo*(height+4) + 5;
 
             iconList.add(new Rectangle2D.Double(x, y, width, height));
