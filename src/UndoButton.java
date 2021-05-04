@@ -7,55 +7,73 @@ import javax.swing.*;
  */
 
 public class UndoButton extends JButton {
+    /**
+     * default constructor that creates an undo button with actionListener
+     * @param d receives datamodel as input
+     */
     public UndoButton(DataModel d) {
         setText("undo");
         addActionListener(event -> {
+            //checks if used twice in a row
             if (checkCounter() == MAXUSAGE) {
                 message();
             } else {
-                iterateCounter();
-                d.undoMove();
+                //checks if undo button has been used 3 times before next player moves
+                if (!d.checkUndoCounter()) {
+                    maxMessage();
+                } else {
+                    d.iterateUndoCounter();
+                    iterateCounter();
+                    d.undoMove();
+                }
             }
         });
     }
 
-    /*
+    /**
      *  Returns counter value
-     *  @param none
      */
     private int checkCounter() {
         return counter;
     }
 
-    /*
+    /**
      *  Returns counter to 0
-     *  @param none
      */
-    public void resetCounter() {
+    public static void resetCounter() {
         counter = 0;
     }
 
-    /*
+    /**
      *  Iterates counter forward by one
-     *  @param none
      */
     private void iterateCounter() {
         counter++;
     }
 
-    /*
-     *  Creates a pop informing the player that the maximum amount of
-     *  undo usages has been met and please select a pit
-     *  @param none
+    /**
+     *  Creates a popup informing the player that they can not select undo
+     *  twice and please select a pit
      */
     private void message() {
-        String text = "Maximum uses of the undo button have been reached. Please select a pit.";
-        String title = "Maximum Uses Reached";
+        String text = "You can not undo more than once without selecting a pit. Please select a pit.";
+        String title = "Undo Error";
         JFrame popup = new JFrame();
         JOptionPane.showMessageDialog(popup, text, title, JOptionPane.WARNING_MESSAGE);
     }
 
-    private int counter = 0;
-    private final int MAXUSAGE = 3;
+    /**
+     *  Creates a popup informing the player that the maximum amount of
+     *  undo usages have been met and please select a pit
+     */
+    private void maxMessage() {
+        String text = "Maximum uses of undo button have been reached. Please select a pit.";
+        String title = "Undo Error";
+        JFrame popup = new JFrame();
+        JOptionPane.showMessageDialog(popup, text, title, JOptionPane.WARNING_MESSAGE);
+    }
+
+    private static int counter = 0;
+    private final int MAXUSAGE = 1;
 
 }

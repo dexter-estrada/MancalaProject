@@ -24,7 +24,7 @@ public class MancalaFrame extends JFrame implements ChangeListener {
     private JButton styleBoardButton;
     private JButton mancalaA;
     private JButton mancalaB;
-    private JButton undoButton;
+    private static UndoButton undoButton;
     private JButton stoneButton;
     private JTextField mancalaAScore;
     private JTextField mancalaBScore;
@@ -38,10 +38,15 @@ public class MancalaFrame extends JFrame implements ChangeListener {
 
     /**
      * Constructs the MancalaFrame to manage the position of PitButtons, undoButton,
-     *  * styleFrameButtons, and player score buttons.
+     * * styleFrameButtons, and player score buttons.
      */
     public MancalaFrame(DataModel dataModel) {
         this.dataModel = dataModel;
+        // Creating mancalaFrame
+        mancalaFrame = new JFrame();
+        // Create size of PitButtons
+        pitButtons = new PitButtons[12];
+
         //Get score mancala A
         mancalaA = new JButton("Mancala-A: " + dataModel.getPlayerAMancala().getNumStones());
         mancalaA.setFont(new Font("Arial", Font.PLAIN, 10));
@@ -66,7 +71,7 @@ public class MancalaFrame extends JFrame implements ChangeListener {
         undoButton.setBorder(new EmptyBorder(10, 10, 10, 10));
 
         //Style Board Button
-        styleBoardButton = new JButton("Style Board Button");
+        styleBoardButton = new StyleBoardGame(mancalaFrame, pitButtons);
         styleBoardButton.setBackground(Color.RED);
         styleBoardButton.setBorder(new EmptyBorder(10, 10, 10, 10));
 
@@ -82,24 +87,20 @@ public class MancalaFrame extends JFrame implements ChangeListener {
         selectPanel.add(stoneButton, BorderLayout.SOUTH);
 
 
-
-
         //Create pitPanel to hold pits and mancala A and mancalaB
         pitPanel = new JPanel();
         pitPanel.setLayout(new GridLayout(2, 6));
         pitPanel.setBorder(new LineBorder(Color.BLACK));
         pitPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
 
-        //Create size of PitButtons
-        pitButtons = new PitButtons[12];
-
         // Creating pitButtons for player B
         for (int i = 11; i > 5; i--) {
             int finalI = i - 6;
+            int index = finalI + 1;
             pitButtons[i] = new PitButtons("B", i);
             // JLabel sideBLabel = new JLabel(pitButtons[i].toString());
             pitButtons[i].setBackground(Color.LIGHT_GRAY);
-            pitButtons[i].setText(Integer.toString(dataModel.getPlayerBPits().get(finalI).getStoneAmount()));
+            pitButtons[i].setText("B" + index + ": " + Integer.toString(dataModel.getPlayerBPits().get(finalI).getStoneAmount()));
             pitButtons[i].addActionListener(e -> dataModel.playerBMove(finalI));
             //pitPanel.add(sideBLabel);
             pitPanel.add(pitButtons[i]);
@@ -108,11 +109,12 @@ public class MancalaFrame extends JFrame implements ChangeListener {
         // Creating pitButtons for player A
         for (int i = 0; i < 6; i++) {
             int finalI = i;
+            int index = finalI + 1;
             pitButtons[i] = new PitButtons("A", i);
             // JLabel labelA = new JLabel("A");
             // JLabel sideALabel = new JLabel(pitButtons[i].toString());
             pitButtons[i].setBackground(Color.LIGHT_GRAY);
-            pitButtons[i].setText(Integer.toString(dataModel.getPlayerBPits().get(finalI).getStoneAmount()));
+            pitButtons[i].setText("A" + index + ": " + Integer.toString(dataModel.getPlayerBPits().get(finalI).getStoneAmount()));
             pitButtons[i].addActionListener(e -> dataModel.playerAMove(finalI));
             // pitPanel.add(sideALabel);
             pitPanel.add(pitButtons[i]);
@@ -167,7 +169,7 @@ public class MancalaFrame extends JFrame implements ChangeListener {
 
         //Board game panel
         boardGamePanel = new JPanel();
-        boardGamePanel.setLayout( new BorderLayout());
+        boardGamePanel.setLayout(new BorderLayout());
         boardGamePanel.add(selectPanel, BorderLayout.NORTH);
         boardGamePanel.add(pitPanel, BorderLayout.CENTER);
         boardGamePanel.add(mancalaA, BorderLayout.EAST);
@@ -175,7 +177,6 @@ public class MancalaFrame extends JFrame implements ChangeListener {
         boardGamePanel.add(buttonPanel, BorderLayout.SOUTH);
 
         //Mancala Frame
-        mancalaFrame = new JFrame();
         mancalaFrame.add(boardGamePanel);
         mancalaFrame.setTitle("Mancala Game");
         mancalaFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -187,6 +188,7 @@ public class MancalaFrame extends JFrame implements ChangeListener {
 
     /**
      * Gets pit Buttons array from the PitButtons class
+     *
      * @return - pit buttons of each Mancala's side
      */
     public PitButtons[] getPitButtons() {
@@ -195,6 +197,7 @@ public class MancalaFrame extends JFrame implements ChangeListener {
 
     /**
      * Gets a player A score
+     *
      * @return - total stones of Mancala A
      */
     public JButton getMancalaA() {
@@ -203,6 +206,7 @@ public class MancalaFrame extends JFrame implements ChangeListener {
 
     /**
      * Gets a player B score
+     *
      * @return - total stones of Mancala B
      */
     public JButton getMancalaB() {
@@ -211,6 +215,7 @@ public class MancalaFrame extends JFrame implements ChangeListener {
 
     /**
      * Gets Stone Selection Button
+     *
      * @return - number stone selection
      */
     public JButton getStoneButton() {
@@ -224,6 +229,7 @@ public class MancalaFrame extends JFrame implements ChangeListener {
 
     /**
      * Gets style board button
+     *
      * @return - style board selection
      */
     public StyleBoardGame getStyleBoardButton() {
@@ -232,14 +238,20 @@ public class MancalaFrame extends JFrame implements ChangeListener {
 
     /**
      * Gets undo button
+     *
      * @return - undo choice
      */
-    public JButton getUndoButton() {
+    public static JButton getUndoButton() {
         return undoButton;
+    }
+
+    public static void resetUndoCounter() {
+        undoButton.resetCounter();
     }
 
     /**
      * Gets a select choice JPanel from the given string select
+     *
      * @param select - play select panel
      * @return - panel for selection
      */
@@ -250,7 +262,7 @@ public class MancalaFrame extends JFrame implements ChangeListener {
             return selectPanel;
         } else if (select.equals("Select Stone")) {
             return selectPanel;
-        }else {
+        } else {
             return null;
         }
     }
@@ -258,6 +270,7 @@ public class MancalaFrame extends JFrame implements ChangeListener {
 
     /**
      * Gets a select choice JButton from the given string select
+     *
      * @param select - player select button
      * @return button selection
      */
@@ -293,24 +306,25 @@ public class MancalaFrame extends JFrame implements ChangeListener {
         // Updating pits
         // Player A
         for (int i = 0; i < 6; i++) {
-            pitButtons[i].setText(Integer.toString(dataModel.getPlayerAPits().get(i).getStoneAmount()));
+            pitButtons[i].setText("A" + i + ": " + Integer.toString(dataModel.getPlayerAPits().get(i).getStoneAmount()));
         }
         // Player B
         for (int i = 11; i > 5; i--) {
             int finalI = i - 6;
-            pitButtons[i].setText(Integer.toString(dataModel.getPlayerBPits().get(finalI).getStoneAmount()));
+            pitButtons[i].setText("B" + finalI + ": " + Integer.toString(dataModel.getPlayerBPits().get(finalI).getStoneAmount()));
         }
 
         if (!checkWinner) {
             checkWinner = true;
             String playerWinner = dataModel.checkWinnerPlayer();
             if (playerWinner != null) {
-               JFrame frame = new JFrame();
+                JFrame frame = new JFrame();
                 if (playerWinner.equals("Player-A Win"))
                     JOptionPane.showMessageDialog(frame, "Player A Win!", "Winner of Mancala Game", JOptionPane.PLAIN_MESSAGE);
                 else
                     JOptionPane.showMessageDialog(frame, "Player B Win!", "Winner of Mancala Game", JOptionPane.PLAIN_MESSAGE);
             }
+            checkWinner = false;
         }
     }
 
