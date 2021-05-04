@@ -81,6 +81,11 @@ public class PitButtons extends JButton implements ChangeListener {
         return namePitButton + "-" + indexPitButton;
     }
 
+
+    /**
+     * Paint the shapes of stones inside the PitButtons
+     * @param g
+     */
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
@@ -94,7 +99,11 @@ public class PitButtons extends JButton implements ChangeListener {
     }
 
 
-
+    /**
+     * Returns the list of stones's shape
+     * @param numStones
+     * @return
+     */
     public Shape [] getPitStoneIcon(int numStones) {
         if (numStones == 0) {
             Rectangle2D stoneIcon = new Rectangle2D.Double(0, 0, 0, 0);
