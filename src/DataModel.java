@@ -135,6 +135,7 @@ public class DataModel {
                 moveHelper(stonesLeft, chosenPit + 1);
                 if (hasExtra) {
                     lastPlayerNo = 1;
+                    PlayerAUndoCounter = 0;
                 }
             }
             UndoButton.resetCounter();
@@ -167,6 +168,7 @@ public class DataModel {
                 moveHelper(stonesLeft, chosenPit + 1);
                 if (hasExtra) {
                     lastPlayerNo = 0;
+                    PlayerBUndoCounter = 0;
                 }
             }
             UndoButton.resetCounter();
