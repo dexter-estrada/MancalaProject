@@ -198,8 +198,9 @@ public class DataModel {
                             playerAMancala.addNumStones(stonesStolen + stonesLeft);
                             playerBPits.get(5 - i).setStoneAmount(0);
                         }
+                    } else {
+                        playerAPits.get(i).iterateStonePit();
                     }
-                    playerAPits.get(i).iterateStonePit();
                     stonesLeft--;
                     i++;
                 }
@@ -217,8 +218,9 @@ public class DataModel {
                             playerBMancala.addNumStones(stonesStolen + 1);
                             playerAPits.get(5 - i).setStoneAmount(0);
                         }
+                    } else {
+                        playerBPits.get(i).iterateStonePit();
                     }
-                    playerBPits.get(i).iterateStonePit();
                     stonesLeft--;
                     i++;
                 }
