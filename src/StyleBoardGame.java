@@ -6,7 +6,7 @@ import java.awt.*;
  *
  * @author Legendary: Thanh Le (thanh.le01@sjsu.edu), Samuel Lam (samuel.lam@sjsu.edu), Dexter Estrada (dexter.estrada@sjsu.edu)
  */
-public class StyleBoardGame extends JButton {
+public class StyleBoardGame extends JButton implements StyleBoard {
     public JFrame mancalaFrame;
     public  PitButtons[] pitButtons;
 
@@ -27,7 +27,7 @@ public class StyleBoardGame extends JButton {
         });
     }
 
-    void setDayStyle() {
+    public void setDayStyle() {
         mancalaFrame.setBackground(Color.YELLOW);
         mancalaFrame.repaint();
         for (PitButtons pitButton : pitButtons) {
@@ -36,7 +36,7 @@ public class StyleBoardGame extends JButton {
         }
     }
 
-    void setNightStyle() {
+    public void setNightStyle() {
         mancalaFrame.setBackground(Color.BLACK);
         mancalaFrame.repaint();
         for (PitButtons button : pitButtons) {
