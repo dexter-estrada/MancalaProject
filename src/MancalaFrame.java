@@ -31,7 +31,7 @@ public class MancalaFrame extends JFrame implements ChangeListener {
     private DataModel dataModel;
     StyleBoardGame styleBoardGame;
 
-    final int MANCALA_FRAME_WIDTH = 850;
+    final int MANCALA_FRAME_WIDTH = 1200;
     final int MANCALA_FRAME_HEIGHT = 350;
     private boolean checkWinner;
 
