@@ -61,7 +61,7 @@ public class MancalaFrame extends JFrame implements ChangeListener {
         mancalaB.setFont(new Font("Arial", Font.PLAIN, 10));
         mancalaB.setEnabled(false);
         mancalaB.setFocusable(false);
-        mancalaB.setBackground(Color.orange);
+        mancalaB.setBackground(Color.red);
         mancalaB.setForeground(Color.WHITE);
         mancalaB.setBorder(new EmptyBorder(10, 40, 10, 40));
 
@@ -72,7 +72,7 @@ public class MancalaFrame extends JFrame implements ChangeListener {
 
         //Style Board Button
         styleBoardButton = new StyleBoardGame(mancalaFrame, pitButtons);
-        styleBoardButton.setBackground(Color.RED);
+        styleBoardButton.setBackground(Color.orange);
         styleBoardButton.setBorder(new EmptyBorder(10, 10, 10, 10));
 
         //Stone Button
