@@ -12,6 +12,14 @@ public class Pit {
      * Construct the Pit class with the initial stone amount given
      * @param stoneAmount - number of stones
      */
+    public Pit() {
+
+    }
+
+    /**
+     * Construct the Pit class with the initial stone amount given
+     * @param stoneAmount - number of stones
+     */
     public Pit(int stoneAmount) {
         this.stoneAmount = stoneAmount;
     }
@@ -50,9 +58,11 @@ public class Pit {
     /**
      * Sets numbers of stone amount in the Pit
      * @param stone - number of stones
+     * @return
      */
-    public void setStoneAmount(int stone) {
+    public int setStoneAmount(int stone) {
         stoneAmount = stone;
+        return stone;
     }
 
     /**
