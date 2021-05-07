@@ -19,7 +19,6 @@ public class MancalaFrame extends JFrame implements ChangeListener {
     private JPanel pitPanel;
     private JPanel boardGamePanel;
     private JPanel selectPanel;
-    private StyleBoardGame styleBoardPanel;
     private PitButtons[] pitButtons;
     private JButton styleBoardButton;
     private JTextArea mancalaA;
@@ -29,7 +28,6 @@ public class MancalaFrame extends JFrame implements ChangeListener {
     private JTextField mancalaAScore;
     private JTextField mancalaBScore;
     private DataModel dataModel;
-    StyleBoardGame styleBoardGame;
 
     final int MANCALA_FRAME_WIDTH = 1200;
     final int MANCALA_FRAME_HEIGHT = 350;
@@ -140,9 +138,8 @@ public class MancalaFrame extends JFrame implements ChangeListener {
         buttonPanel = new JPanel();
         buttonPanel.add(undoButton, BorderLayout.NORTH);
         buttonPanel.add(mancalaAScore, BorderLayout.EAST);
-        //  buttonPanel.add(mancalaALbl);
         buttonPanel.add(mancalaBScore, BorderLayout.WEST);
-        //buttonPanel.add(mancalaBLbl);
+
 
         //Board game panel
         boardGamePanel = new JPanel();
@@ -324,5 +321,6 @@ public class MancalaFrame extends JFrame implements ChangeListener {
             checkWinner = false;
         }
     }
+
 
 }
