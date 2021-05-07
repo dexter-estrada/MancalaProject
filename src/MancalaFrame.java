@@ -273,14 +273,14 @@ public class MancalaFrame extends JFrame implements ChangeListener {
         String stonesA = "";
         for (int j = 0; j < dataModel.getPlayerAMancala().getNumStones(); j++) {
             stonesA = stonesA + "o";
-            if (j % 5 == 4) {
+            if (j % 10 == 9) {
                 stonesA = stonesA + "\n";
             }
         }
         String stonesB = "";
         for (int j = 0; j < dataModel.getPlayerBMancala().getNumStones(); j++) {
             stonesB = stonesB + "o";
-            if (j % 5 == 4) {
+            if (j % 10 == 9) {
                 stonesB = stonesB + "\n";
             }
         }
