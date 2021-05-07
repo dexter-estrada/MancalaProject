@@ -44,6 +44,7 @@ public class MancalaFrame extends JFrame implements ChangeListener {
         this.dataModel = dataModel;
         // Creating mancalaFrame
         mancalaFrame = new JFrame();
+
         // Create size of PitButtons
         pitButtons = new PitButtons[12];
 
@@ -80,12 +81,10 @@ public class MancalaFrame extends JFrame implements ChangeListener {
         stoneButton.setBackground(Color.CYAN);
         stoneButton.setBorder(new EmptyBorder(10, 10, 10, 10));
 
-
         //Set select JPanel for style board game Button and stone Button
         selectPanel = new JPanel();
         selectPanel.add(styleBoardButton, BorderLayout.NORTH);
         selectPanel.add(stoneButton, BorderLayout.SOUTH);
-
 
         //Create pitPanel to hold pits and mancala A and mancalaB
         pitPanel = new JPanel();
@@ -98,7 +97,6 @@ public class MancalaFrame extends JFrame implements ChangeListener {
             int finalI = i - 6;
             int index = finalI + 1;
             pitButtons[i] = new PitButtons("B", i);
-            // JLabel sideBLabel = new JLabel(pitButtons[i].toString());
             pitButtons[i].setBackground(Color.LIGHT_GRAY);
             String stones = " ";
             for (int j = 0; j < dataModel.getPlayerBPits().get(finalI).getStoneAmount(); j++) {
@@ -106,7 +104,6 @@ public class MancalaFrame extends JFrame implements ChangeListener {
             }
             pitButtons[i].setText("B" + index + ": " + stones);
             pitButtons[i].addActionListener(e -> dataModel.playerBMove(finalI));
-            //pitPanel.add(sideBLabel);
             pitPanel.add(pitButtons[i]);
         }
 
@@ -115,8 +112,6 @@ public class MancalaFrame extends JFrame implements ChangeListener {
             int finalI = i;
             int index = finalI + 1;
             pitButtons[i] = new PitButtons("A", i);
-            // JLabel labelA = new JLabel("A");
-            // JLabel sideALabel = new JLabel(pitButtons[i].toString());
             pitButtons[i].setBackground(Color.LIGHT_GRAY);
             String stones = " ";
             for (int j = 0; j < dataModel.getPlayerAPits().get(i).getStoneAmount(); j++) {
@@ -124,35 +119,10 @@ public class MancalaFrame extends JFrame implements ChangeListener {
             }
             pitButtons[i].setText("A" + index + ": " + stones);
             pitButtons[i].addActionListener(e -> dataModel.playerAMove(finalI));
-            // pitPanel.add(sideALabel);
             pitPanel.add(pitButtons[i]);
         }
-
-        /*
-        for (int i= pitButtons.length-1; i>=0; i--) {
-            int finalI = i % 6; // Position of player A or B's pits
-            if (i<6) {
-                pitButtons[i] = new PitButtons("A", i);
-               // JLabel labelA = new JLabel("A");
-               // JLabel sideALabel = new JLabel(pitButtons[i].toString());
-                pitButtons[i].setBackground(Color.LIGHT_GRAY);
-                pitButtons[i].setText(Integer.toString(dataModel.getPlayerBPits().get(finalI)));
-                pitButtons[i].addActionListener(e -> dataModel.playerAMove(finalI));
-                // pitPanel.add(sideALabel);
-            } else {
-                pitButtons[i] = new PitButtons("B", i);
-               // JLabel sideBLabel = new JLabel(pitButtons[i].toString());
-                pitButtons[i].setBackground(Color.LIGHT_GRAY);
-                pitButtons[i].setText(Integer.toString(dataModel.getPlayerBPits().get(finalI)));
-                pitButtons[i].addActionListener(e -> dataModel.playerBMove(finalI));
-                //pitPanel.add(sideBLabel);
-            }
-            pitPanel.add(pitButtons[i]);
-        }
-        */
 
         //Get mancala A score
-        // JLabel mancalaALbl = new JLabel("Mancala-A Score");
         mancalaAScore = new JTextField("0");
         mancalaAScore.setText("A-Score: " + dataModel.getPlayerAMancala().getNumStones());
         mancalaAScore.setBackground(Color.WHITE);
@@ -160,7 +130,6 @@ public class MancalaFrame extends JFrame implements ChangeListener {
         mancalaAScore.setBorder(new EmptyBorder(10, 10, 10, 10));
 
         //Get mancala B score
-        //  JLabel mancalaBLbl = new JLabel("Mancala-B Score");
         mancalaBScore = new JTextField("0");
         mancalaBScore.setText("B-Score: " + dataModel.getPlayerBMancala().getNumStones());
         mancalaBScore.setBackground(Color.white);
@@ -294,13 +263,9 @@ public class MancalaFrame extends JFrame implements ChangeListener {
         }
     }
 
-    public void add(int numStones) {
-        Pit pit = new Pit(numStones);
-    }
 
     /**
      * Invoked when the target of the listener has changed its state.
-     *
      * @param e a ChangeEvent object
      */
     public void stateChanged(ChangeEvent e) {
@@ -358,10 +323,6 @@ public class MancalaFrame extends JFrame implements ChangeListener {
             }
             checkWinner = false;
         }
-    }
-
-    public void setBackground(Color yellow) {
-        //mancalaFrame.setBackground(Color.WHITE);
     }
 
 }

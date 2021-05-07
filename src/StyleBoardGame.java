@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Description
+ * Description: Popup day style board and night style
  *
  * @author Legendary: Thanh Le (thanh.le01@sjsu.edu), Samuel Lam (samuel.lam@sjsu.edu), Dexter Estrada (dexter.estrada@sjsu.edu)
  */
@@ -27,6 +27,9 @@ public class StyleBoardGame extends JButton implements StyleBoard {
         });
     }
 
+    /**
+     * Returns the day style board game
+     */
     public void setDayStyle() {
         mancalaFrame.setBackground(Color.YELLOW);
         mancalaFrame.repaint();
@@ -36,6 +39,9 @@ public class StyleBoardGame extends JButton implements StyleBoard {
         }
     }
 
+    /**
+     * Returns the night style board game
+     */
     public void setNightStyle() {
         mancalaFrame.setBackground(Color.BLACK);
         mancalaFrame.repaint();
