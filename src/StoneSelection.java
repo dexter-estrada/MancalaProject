@@ -11,6 +11,10 @@ public class StoneSelection extends JButton {
     private int numStones;
     private MancalaFrame pitStones;
 
+    /**
+     * Constructs a StoneSelection class with the parameter dataModel given
+     * @param dataModel - object of DataModel class
+     */
     public StoneSelection(DataModel dataModel) {
         setText("Stone Button");
         //Default the initial stone

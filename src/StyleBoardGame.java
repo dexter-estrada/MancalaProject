@@ -10,6 +10,11 @@ public class StyleBoardGame extends JButton implements StyleBoard {
     public JFrame mancalaFrame;
     public  PitButtons[] pitButtons;
 
+    /**
+     * Constructs of StyleBoardGame with the mancalaFrame and pitButtons parameters given
+     * @param mancalaFrame - object of MancalaFrame class
+     * @param pitButtons - object of PitButtons class
+     */
     StyleBoardGame(JFrame mancalaFrame, PitButtons[] pitButtons) {
         this.mancalaFrame = mancalaFrame;
         this.pitButtons = pitButtons;
