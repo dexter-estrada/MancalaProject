@@ -49,7 +49,7 @@ public class MancalaFrame extends JFrame implements ChangeListener {
 
         //Get score mancala A
         mancalaA = new JTextArea("Mancala-A: ");
-        mancalaA.setFont(new Font("Arial", Font.PLAIN, 10));
+        mancalaA.setFont(new Font("Arial", Font.HANGING_BASELINE, 20));
         mancalaA.setEnabled(false);
         mancalaA.setFocusable(false);
         mancalaA.setBackground(Color.BLUE);
@@ -58,7 +58,7 @@ public class MancalaFrame extends JFrame implements ChangeListener {
 
         //Get score mancala B
         mancalaB = new JTextArea("Mancala-B: ");
-        mancalaB.setFont(new Font("Arial", Font.PLAIN, 10));
+        mancalaB.setFont(new Font("Arial", Font.HANGING_BASELINE, 20));
         mancalaB.setEnabled(false);
         mancalaB.setFocusable(false);
         mancalaB.setBackground(Color.red);
