@@ -86,9 +86,6 @@ public class DataModel {
      * @param chosenPit An integer from 0 - 5
      */
     public void playerAMove(int chosenPit) {
-        // Convert to index starting at 0
-        //chosenPit--;
-
         // Checks if it's player A's turn
         if (lastPlayerNo == 1 || lastPlayerNo == -1) {
             int stonesLeft = playerAPits.get(chosenPit).getStoneAmount();
@@ -119,9 +116,6 @@ public class DataModel {
      * @param chosenPit An integer from 0 - 5
      */
     public void playerBMove(int chosenPit) {
-        // Convert to index starting at 0
-        //chosenPit--;
-
         // Checks if it's player B's turn
         if (lastPlayerNo == 0) {
             int stonesLeft = playerBPits.get(chosenPit).getStoneAmount();

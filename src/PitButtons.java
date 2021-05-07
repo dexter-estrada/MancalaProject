@@ -1,10 +1,4 @@
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import java.awt.*;
-import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-
 /**
  * Description: Class PitButtons holds name and keeps track of index of pit button
  *
