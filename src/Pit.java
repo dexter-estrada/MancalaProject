@@ -9,8 +9,7 @@ public class Pit {
     private int indexPit;
 
     /**
-     * Construct the Pit class with the initial stone amount given
-     * @param stoneAmount - number of stones
+     * Construct the Pit class with no initial paramter
      */
     public Pit() {
 
