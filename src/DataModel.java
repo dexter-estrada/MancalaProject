@@ -9,10 +9,10 @@ import java.util.ArrayList;
  * @author Legendary: Thanh Le (thanh.le01@sjsu.edu), Samuel Lam (samuel.lam@sjsu.edu), Dexter Estrada (dexter.estrada@sjsu.edu)
  */
 public class DataModel {
-    private ArrayList<Pit> playerAPits;         // Player A's pits
-    private PlayerMancala playerAMancala;                     // Player A's Mancala
-    private ArrayList<Pit> playerBPits;         // Player B's pits
-    private PlayerMancala playerBMancala;                     // Player B's Mancala
+    private ArrayList<Pit> playerAPits;                 // Player A's pits
+    private PlayerMancala playerAMancala;               // Player A's Mancala
+    private ArrayList<Pit> playerBPits;                 // Player B's pits
+    private PlayerMancala playerBMancala;               // Player B's Mancala
     private int PlayerAUndoCounter = 0;
     private int PlayerBUndoCounter = 0;
     private final int MAXUNDOUSAGE = 3;
@@ -26,7 +26,7 @@ public class DataModel {
 
     private ArrayList<ChangeListener> listeners;    // Listeners attached to the DataModel
 
-    // Testing doing turns. MUST DELETE BEFORE RELEASING
+    // Testing doing turns.
     public static void main(String[] args) {
         DataModel game = new DataModel(8);
         game.printText();
@@ -70,7 +70,7 @@ public class DataModel {
     }
 
     /**
-     * Prints console version of output. MUST DELETE BEFORE RELEASING
+     * Prints console version of output.
      */
     public void printText() {
         System.out.println("Player A:");
@@ -357,6 +357,12 @@ public class DataModel {
         return stonesLeft;
     }
 
+    /**
+     * Checks if the game has reached the end condition
+     * and empties the pits once the end condition has been reached.
+     * Also checks the winner of the game.
+     * @return A string of the player who won. If no one won, return null
+     */
     public String checkWinnerPlayer() {
         //Check no stones on the player !
         boolean endGame = true;
