@@ -332,7 +332,8 @@ public class MancalaFrame extends JFrame implements ChangeListener {
             for (int j = 0; j < dataModel.getPlayerAPits().get(i).getStoneAmount(); j++) {
                 stones = stones + "●";
             }
-            pitButtons[i].setText("A" + i + ": " + stones);
+            int index = i + 1;
+            pitButtons[i].setText("A" + index + ": " + stones);
         }
         // Player B
         for (int i = 11; i > 5; i--) {
@@ -341,7 +342,8 @@ public class MancalaFrame extends JFrame implements ChangeListener {
             for (int j = 0; j < dataModel.getPlayerBPits().get(finalI).getStoneAmount(); j++) {
                 stones = stones + "●";
             }
-            pitButtons[i].setText("B" + finalI + ": " + stones);
+            int index = finalI + 1;
+            pitButtons[i].setText("B" + index + ": " + stones);
         }
 
         if (!checkWinner) {
