@@ -357,6 +357,12 @@ public class DataModel {
         return stonesLeft;
     }
 
+    /**
+     * Checks if the game has reached the end condition
+     * and empties the pits once the end condition has been reached.
+     * Also checks the winner of the game.
+     * @return A string of the player who won. If no one won, return null
+     */
     public String checkWinnerPlayer() {
         //Check no stones on the player !
         boolean endGame = true;
