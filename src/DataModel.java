@@ -26,18 +26,6 @@ public class DataModel {
 
     private ArrayList<ChangeListener> listeners;    // Listeners attached to the DataModel
 
-    // Testing doing turns.
-    public static void main(String[] args) {
-        DataModel game = new DataModel(8);
-        game.printText();
-        game.playerAMove(5);
-        game.printText();
-        game.playerBMove(5);
-        game.printText();
-        game.undoMove();
-        game.printText();
-    }
-
     /**
      * Default constructor. Doesn't add any stones to the pits
      */
@@ -67,25 +55,6 @@ public class DataModel {
             playerBPits.add(new Pit(numberOfStones, 'A', i));
         }
         listeners = new ArrayList<>();
-    }
-
-    /**
-     * Prints console version of output.
-     */
-    public void printText() {
-        System.out.println("Player A:");
-        for (Pit pit : playerAPits) {
-            System.out.print(pit.getStoneAmount() + " ");
-        }
-        System.out.println();
-        System.out.println(playerAMancala.getNumStones());
-        System.out.println("Player B:");
-        for (Pit pit : playerBPits) {
-            System.out.print(pit.getStoneAmount() + " ");
-        }
-        System.out.println();
-        System.out.println(playerBMancala.getNumStones());
-        System.out.println();
     }
 
     /**
