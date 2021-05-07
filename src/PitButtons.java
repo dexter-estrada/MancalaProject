@@ -11,12 +11,6 @@ import java.util.ArrayList;
  * @author Legendary: Thanh Le (thanh.le01@sjsu.edu), Samuel Lam (samuel.lam@sjsu.edu), Dexter Estrada (dexter.estrada@sjsu.edu)
  */
 public class PitButtons extends JButton {
-    private static final int PIT_WIDTH = 100;
-    private static final int PIT_HEIGHT = 100;
-    private int numStones;
-    private  int pitNumber;
-    private char pitSide;
-    private DataModel dataModel;
     private int indexPitButton;
     private String namePitButton;
     private String namePit;
