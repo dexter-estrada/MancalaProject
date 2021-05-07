@@ -74,8 +74,6 @@ public class PitButtons extends JButton {
 
 
 
-
-
 }
 
 
