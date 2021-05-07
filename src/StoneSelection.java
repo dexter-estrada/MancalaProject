@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
  */
 public class StoneSelection extends JButton {
     private int numStones;
-    private MancalaFrame pitStones;
 
     public StoneSelection(DataModel dataModel) {
         setText("Stone Button");
